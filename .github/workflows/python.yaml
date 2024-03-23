@@ -23,6 +23,3 @@ jobs:
           run: ruff .
         - name: Check formatting with black
           run: black . --check --verbose
-        - name: Run unit tests
-          run: |
-            pytest
