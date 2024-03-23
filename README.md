@@ -1,78 +1,64 @@
-# Python project template
+# Python OpenAI demos
 
-This is a template repository for any Python project that comes with the following dev tools:
+This repository contains a collection of Python scripts that demonstrate how to use the OpenAI API to generate chat completions.
 
-* `ruff`: identifies many errors and style issues (`flake8`, `isort`, `pyupgrade`)
-* `black`: auto-formats code
+In increasing order of complexity, the scripts are:
 
-Those checks are run as pre-commit hooks using the `pre-commit` library.
+1. [`chat.py`](./chat.py): A simple script that demonstrates how to use the OpenAI API to generate chat completions.
+2. [`chat_stream.py`](./chat_stream.py): Adds `stream=True` to the API call to return a generator that streams the completion as it is being generated.
+3. [`chat_history.py`](./chat_history.py): Adds a back-and-forth chat interface using `input()` which keeps track of past messages and sends them with each chat completion call.
+4. [`chat_history_stream.py`](./chat_history_stream.py): The same idea, but with `stream=True` enabled.
 
-It includes `pytest` for testing plus the `pytest-cov` plugin to measure coverage.
+Plus these scripts to demonstrate additional features:
 
-The checks and tests are all run using Github actions on every pull request and merge to main.
+5. [`chat_safety.py`](./chat_safety.py): The simple script with exception handling for Azure AI Content Safety filter errors.
+6. [`chat_async.py`](./chat_async.py): Uses the async clients to make asynchronous calls, including an example of sending off multiple requests at once using `asyncio.gather`.
 
-This repository is setup for Python 3.11. To change the version:
-1. Change the `image` argument in `.devcontainer/devcontainer.json` (see [https://github.com/devcontainers/images/tree/main/src/python](https://github.com/devcontainers/images/tree/main/src/python#configuration) for a list of pre-built Docker images)
-1. Change the config options in `.precommit-config.yaml`
-1. Change the version number in `.github/workflows/python.yaml`
+## Setting up the environment
 
-## Development instructions
+If you open this up in a Dev Container or GitHub Codespaces, everything will be setup for you.
+If not, follow these steps:
 
-## With devcontainer
+1. Set up a Python virtual environment and activate it.
 
-This repository comes with a devcontainer (a Dockerized Python environment). If you open it in Codespaces, it should automatically initialize the devcontainer.
+2. Install the required packages:
 
-Locally, you can open it in VS Code with the Dev Containers extension installed.
-
-## Without devcontainer
-
-If you can't or don't want to use the devcontainer, then you should first create a virtual environment:
-
-```
-python3 -m venv .venv
-source .venv/bin/activate
+```bash
+pip install -r requirements.txt
 ```
 
-Then install the dev tools and pre-commit hooks:
+## Configuring the OpenAI environment variables
 
-```
-python3 -m pip install --user -r requirements-dev.txt
-pre-commit install
-```
+These scripts can be run against an Azure OpenAI account, an OpenAI.com account, or a local Ollama server,
+depending on the environment variables you set.
 
-## Adding code and tests
+1. Copy the `.env.sample file to a new file called `.env`:
 
-This repository starts with a very simple `main.py` and a test for it at `tests/main_test.py`.
-You'll want to replace that with your own code, and you'll probably want to add additional files
-as your code grows in complexity.
+    ```bash
+    cp .env.sample .env
+    ```
 
-When you're ready to run tests, run:
+2. For Azure OpenAI, create an Azure OpenAI gpt-3.5 or gpt-4 deployment, and customize the `.env` file with your Azure OpenAI endpoint and deployment id.
 
-```
-python3 -m pytest
-```
+    ```bash
+    API_HOST=azure
+    AZURE_OPENAI_ENDPOINT=https://YOUR-AZURE-OPENAI-SERVICE-NAME.openai.azure.com
+    AZURE_OPENAI_DEPLOYMENT=YOUR-AZURE-DEPLOYMENT-NAME
+    AZURE_OPENAI_VERSION=2024-03-01-preview
+    ```
 
-# File breakdown
+3. For OpenAI.com, customize the `.env` file with your OpenAI API key and desired model name.
 
-Here's a short explanation of each file/folder in this template:
+    ```bash
+    API_HOST=openai
+    OPENAI_KEY=YOUR-OPENAI-API-KEY
+    OPENAI_MODEL=gpt-3.5-turbo
+    ```
 
-* `.devcontainer`: Folder containing files used for setting up a devcontainer
-  * `devcontainer.json`: File configuring the devcontainer, includes VS Code settings
-* `.github`: Folder for Github-specific files and folders
-  * `workflows`: Folder containing Github actions config files
-    * `python.yaml`: File configuring Github action that runs tools and tests
-* `tests`: Folder containing Python tests
-  * `main_test.py`: File with pytest-style tests of main.py
-* `.gitignore`: File describing what file patterns Git should never track
-* `.pre-commit-config.yaml`: File listing all the pre-commit hooks and args
-* `main.py`: The main (and currently only) Python file for the program
-* `pyproject.toml`: File configuring most of the Python dev tools
-* `README.md`: You're reading it!
-* `requirements-dev.txt`: File listing all PyPi packages required for development
-* `requirements.txt`: File listing all PyPi packages required for production
+4. For Ollama, customize the `.env` file with your Ollama endpoint and model name (any model you've pulled).
 
-For a longer explanation, read [this blog post](http://blog.pamelafox.org/2022/09/how-i-setup-python-project.html).
-
-# 🔎 Found an issue or have an idea for improvement?
-
-Help me make this template repository better by letting us know and opening an issue!
+    ```bash
+    API_HOST=ollama
+    OLLAMA_ENDPOINT=http://localhost:11434/v1
+    OLLAMA_MODEL=llama2
+    ```
