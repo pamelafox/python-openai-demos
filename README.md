@@ -33,13 +33,13 @@ pip install -r requirements.txt
 These scripts can be run against an Azure OpenAI account, an OpenAI.com account, or a local Ollama server,
 depending on the environment variables you set.
 
-1. Copy the `.env.sample file to a new file called `.env`:
+1. Copy the `.env.sample` file to a new file called `.env`:
 
     ```bash
     cp .env.sample .env
     ```
 
-2. For Azure OpenAI, create an Azure OpenAI gpt-3.5 or gpt-4 deployment, and customize the `.env` file with your Azure OpenAI endpoint and deployment id.
+2. For Azure OpenAI, create an Azure OpenAI gpt-3.5 or gpt-4 deployment (perhaps using [this template](https://github.com/Azure-Samples/azure-openai-keyless)), and customize the `.env` file with your Azure OpenAI endpoint and deployment id.
 
     ```bash
     API_HOST=azure
