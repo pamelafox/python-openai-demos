@@ -20,7 +20,7 @@ if API_HOST == "azure":
     MODEL_NAME = os.getenv("AZURE_OPENAI_DEPLOYMENT")
 elif API_HOST == "ollama":
     client = openai.OpenAI(
-        base_url="http://localhost:11434/v1",
+        base_url=os.getenv("OLLAMA_ENDPOINT"),
         api_key="nokeyneeded",
     )
     MODEL_NAME = os.getenv("OLLAMA_MODEL")

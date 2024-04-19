@@ -25,7 +25,7 @@ If not, follow these steps:
 2. Install the required packages:
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 ## Configuring the OpenAI environment variables
@@ -33,7 +33,7 @@ pip install -r requirements.txt
 These scripts can be run against an Azure OpenAI account, an OpenAI.com account, or a local Ollama server,
 depending on the environment variables you set.
 
-1. Copy the `.env.sample file to a new file called `.env`:
+1. Copy the `.env.sample` file to a new file called `.env`:
 
     ```bash
     cp .env.sample .env
