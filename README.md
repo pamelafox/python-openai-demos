@@ -25,7 +25,7 @@ If not, follow these steps:
 2. Install the required packages:
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 ## Configuring the OpenAI environment variables
