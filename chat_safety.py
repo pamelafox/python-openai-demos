@@ -5,7 +5,7 @@ import openai
 from dotenv import load_dotenv
 
 # Setup the OpenAI client to use either Azure, OpenAI.com, or Ollama API
-load_dotenv()
+load_dotenv(override=True)
 API_HOST = os.getenv("API_HOST")
 
 if API_HOST == "azure":
