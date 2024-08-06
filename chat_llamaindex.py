@@ -27,6 +27,13 @@ elif API_HOST == "ollama":
     llm = OpenAILike(
         model=os.getenv("OLLAMA_MODEL"), api_base=os.getenv("OLLAMA_ENDPOINT"), api_key="fake", is_chat_model=True
     )
+elif API_HOST == "github":
+    llm = OpenAILike(
+        model=os.getenv("GITHUB_MODEL"),
+        api_base="https://models.inference.ai.azure.com",
+        api_key=os.getenv("GITHUB_TOKEN"),
+        is_chat_model=True,
+    )
 else:
     llm = OpenAI(model=os.getenv("OPENAI_MODEL"), api_key=os.getenv("OPENAI_KEY"))
 
