@@ -32,7 +32,8 @@ elif API_HOST == "github":
         model=os.getenv("GITHUB_MODEL"),
         api_base="https://models.inference.ai.azure.com",
         api_key=os.getenv("GITHUB_TOKEN"),
-        is_chat_model=True)
+        is_chat_model=True,
+    )
 else:
     llm = OpenAI(model=os.getenv("OPENAI_MODEL"), api_key=os.getenv("OPENAI_KEY"))
 
