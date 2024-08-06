@@ -21,10 +21,16 @@ if API_HOST == "azure":
     MODEL_NAME = os.getenv("AZURE_OPENAI_DEPLOYMENT")
 elif API_HOST == "ollama":
     client = openai.AsyncOpenAI(
-        base_url="http://localhost:11434/v1",
+        base_url=os.getenv("OLLAMA_ENDPOINT"),
         api_key="nokeyneeded",
     )
     MODEL_NAME = os.getenv("OLLAMA_MODEL")
+elif API_HOST == "github":
+    client = openai.AsyncOpenAI(
+        base_url="https://models.inference.ai.azure.com",
+        api_key=os.getenv("GITHUB_TOKEN")
+    )
+    MODEL_NAME = os.getenv("GITHUB_MODEL")
 else:
     client = openai.AsyncOpenAI(api_key=os.getenv("OPENAI_KEY"))
     MODEL_NAME = os.getenv("OPENAI_MODEL")

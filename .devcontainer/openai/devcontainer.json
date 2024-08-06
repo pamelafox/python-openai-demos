@@ -1,13 +1,8 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.245.0/containers/python-3
 {
-    "name": "python-openai-demos (Azure OpenAI)",
+    "name": "python-openai-demos (Ollama)",
     "image": "mcr.microsoft.com/devcontainers/python:3.11-bullseye",
-
-    "features": {
-        "ghcr.io/devcontainers/features/azure-cli:latest": {},
-        "ghcr.io/azure/azure-dev/azd:latest": {}
-    },
     // Configure tool-specific properties.
     "customizations": {
         // Configure properties specific to VS Code.
@@ -27,7 +22,7 @@
     },
 
     // Use 'postCreateCommand' to run commands after the container is created.
-    "postCreateCommand": "pip3 install --user -r requirements-dev.txt",
+    "postCreateCommand": "pip3 install --user -r requirements-dev.txt && cp .env.sample.openai .env",
 
     // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
     "remoteUser": "vscode"
