@@ -49,6 +49,12 @@ depending on the environment variables you set.
     AZURE_OPENAI_VERSION=2024-03-01-preview
     ```
 
+    If you are not yet logged into the Azure account associated with that deployment, run this command to log in:
+
+    ```shell
+    az login
+    ```
+
 3. For OpenAI.com, customize the `.env` file with your OpenAI API key and desired model name.
 
     ```bash
