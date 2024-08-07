@@ -30,7 +30,7 @@ python -m pip install -r requirements.txt
 
 ## Configuring the OpenAI environment variables
 
-These scripts can be run against an Azure OpenAI account, an OpenAI.com account, or a local Ollama server,
+These scripts can be run with Azure OpenAI account, OpenAI.com, local Ollama server, or GitHub models,
 depending on the environment variables you set.
 
 1. Copy the `.env.sample` file to a new file called `.env`:
@@ -65,3 +65,17 @@ depending on the environment variables you set.
     ```
 
     If you're running inside the Dev Container, replace `localhost` with `host.docker.internal`.
+
+5. For GitHub models, customize the `.env` file with your GitHub model name.
+
+    ```bash
+    API_HOST=github
+    GITHUB_MODEL=gpt-4o
+    ```
+
+    You'll need a `GITHUB_TOKEN` environment variable that stores a GitHub personal access token.
+    If you're running this inside a GitHub Codespace, the token will be automatically available.
+    If not, generate a new [personal access token](https://github.com/settings/tokens) and run this command to set the `GITHUB_TOKEN` environment variable:
+
+    ```shell
+    export GITHUB_TOKEN="<your-github-token-goes-here>"
