@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.245.0/containers/python-3
 {
-    "name": "python-openai-demos (Ollama)",
+    "name": "python-openai-demos (OpenAI.com)",
     "image": "mcr.microsoft.com/devcontainers/python:3.11-bullseye",
     // Configure tool-specific properties.
     "customizations": {
