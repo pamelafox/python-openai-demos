@@ -11,9 +11,10 @@ In increasing order of complexity, the scripts are:
 
 Plus these scripts to demonstrate additional features:
 
-5. [`chat_safety.py`](./chat_safety.py): The simple script with exception handling for Azure AI Content Safety filter errors.
-6. [`chat_async.py`](./chat_async.py): Uses the async clients to make asynchronous calls, including an example of sending off multiple requests at once using `asyncio.gather`.
-6. [`chat_langchain.py`](./chat_langchain.py): Uses the langchain SDK to generate chat completions. [Learn more from Langchain docs](https://python.langchain.com/docs/get_started/quickstart)
+* [`chat_safety.py`](./chat_safety.py): The simple script with exception handling for Azure AI Content Safety filter errors.
+* [`chat_async.py`](./chat_async.py): Uses the async clients to make asynchronous calls, including an example of sending off multiple requests at once using `asyncio.gather`.
+* [`chat_langchain.py`](./chat_langchain.py): Uses the langchain SDK to generate chat completions. [Learn more from Langchain docs](https://python.langchain.com/docs/get_started/quickstart)
+* [`chat_llamaindex.py`](./chat_llamaindex.py): Uses the LlamaIndex SDK to generate chat completions. [Learn more from LlamaIndex docs](https://docs.llamaindex.ai/en/stable/)
 
 ## Setting up the environment
 
