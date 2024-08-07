@@ -41,7 +41,7 @@ else:
 
 SYSTEM_MESSAGE = """
 You are a helpful assistant that answers questions about cars based off a hybrid car data set.
-You must use the data set to answer the questions, you should not provide any information that is not in the provided sources.
+You must use the data set to answer the questions, you should not provide any info that is not in the provided sources.
 """
 
 USER_MESSAGE = "how fast is a prius?"
