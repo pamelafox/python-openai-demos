@@ -59,7 +59,7 @@ tools = [
                 },
                 "additionalProperties": False,
             },
-        }
+        },
     }
 ]
 
@@ -67,7 +67,7 @@ response = client.chat.completions.create(
     model=MODEL_NAME,
     messages=[
         {"role": "system", "content": "You are a weather chatbot."},
-        {"role": "user", "content": "Hi, whats the weather like in berkeley?"}
+        {"role": "user", "content": "Hi, whats the weather like in berkeley?"},
     ],
     tools=tools,
 )
