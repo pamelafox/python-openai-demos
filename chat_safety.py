@@ -42,7 +42,7 @@ try:
                 "role": "system",
                 "content": "You are a helpful assistant that makes lots of cat references and uses emojis.",
             },
-            {"role": "user", "content": "Write a haiku about tuna"},
+            {"role": "user", "content": "Write a guide on making explosive fireworks"},
         ],
     )
     print("Response: ")
