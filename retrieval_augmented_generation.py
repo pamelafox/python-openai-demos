@@ -10,7 +10,6 @@ load_dotenv(override=True)
 API_HOST = os.getenv("API_HOST")
 
 if API_HOST == "azure":
-
     token_provider = azure.identity.get_bearer_token_provider(
         azure.identity.DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
     )
@@ -22,7 +21,6 @@ if API_HOST == "azure":
     MODEL_NAME = os.getenv("AZURE_OPENAI_DEPLOYMENT")
 
 elif API_HOST == "ollama":
-
     client = openai.OpenAI(
         base_url=os.getenv("OLLAMA_ENDPOINT"),
         api_key="nokeyneeded",
@@ -30,21 +28,15 @@ elif API_HOST == "ollama":
     MODEL_NAME = os.getenv("OLLAMA_MODEL")
 
 elif API_HOST == "github":
-
     client = openai.OpenAI(base_url="https://models.inference.ai.azure.com", api_key=os.getenv("GITHUB_TOKEN"))
     MODEL_NAME = os.getenv("GITHUB_MODEL")
 
 else:
-
     client = openai.OpenAI(api_key=os.getenv("OPENAI_KEY"))
     MODEL_NAME = os.getenv("OPENAI_MODEL")
 
-SYSTEM_MESSAGE = """
-You are a helpful assistant that answers questions about cars based off a hybrid car data set.
-You must use the data set to answer the questions, you should not provide any info that is not in the provided sources.
-"""
 
-USER_MESSAGE = "how fast is a prius?"
+USER_MESSAGE = "how fast is the prius v?"
 
 # Open the CSV and store in a list
 with open("hybrid.csv") as file:
@@ -69,6 +61,11 @@ print(f"Found {len(matches)} matches:")
 print(matches_table)
 
 # Now we can use the matches to generate a response
+SYSTEM_MESSAGE = """
+You are a helpful assistant that answers questions about cars based off a hybrid car data set.
+You must use the data set to answer the questions, you should not provide any info that is not in the provided sources.
+"""
+
 response = client.chat.completions.create(
     model=MODEL_NAME,
     temperature=0.7,
