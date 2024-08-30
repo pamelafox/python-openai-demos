@@ -68,7 +68,7 @@ You must use the data set to answer the questions, you should not provide any in
 
 response = client.chat.completions.create(
     model=MODEL_NAME,
-    temperature=0.7,
+    temperature=0.3,
     messages=[
         {"role": "system", "content": SYSTEM_MESSAGE},
         {"role": "user", "content": USER_MESSAGE + "\nSources: " + matches_table},

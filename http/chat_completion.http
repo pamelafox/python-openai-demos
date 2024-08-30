@@ -3,8 +3,8 @@ Authorization: Bearer {{$dotenv TOKEN}}
 Content-Type: application/json
 
 {
-    "messages": [{"role":"system","content":"You are an AI assistant that loves emojis."},
-                 {"role":"user","content":"What is the capital of France?"}],
+    "messages": [{"role":"system","content":"You are an AI assistant that answers questions with short clear answers."},
+                 {"role":"user","content":"How fast is the Prius V?"}],
     "max_tokens": 800,
     "temperature": 0.7,
     "frequency_penalty": 0,
