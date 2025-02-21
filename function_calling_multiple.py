@@ -81,7 +81,7 @@ tools = [
                 "additionalProperties": False,
             },
         },
-    }
+    },
 ]
 
 response = client.chat.completions.create(
@@ -91,7 +91,7 @@ response = client.chat.completions.create(
         {"role": "user", "content": "is it rainy enough in sydney to watch movies and which ones are on?"},
     ],
     tools=tools,
-    tool_choice="auto"
+    tool_choice="auto",
 )
 
 print("Response:")
