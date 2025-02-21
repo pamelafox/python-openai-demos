@@ -1,5 +1,5 @@
-import os
 import json
+import os
 
 import azure.identity
 import openai
@@ -10,7 +10,6 @@ load_dotenv(override=True)
 API_HOST = os.getenv("API_HOST")
 
 if API_HOST == "azure":
-
     token_provider = azure.identity.get_bearer_token_provider(
         azure.identity.DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
     )
@@ -22,7 +21,6 @@ if API_HOST == "azure":
     MODEL_NAME = os.getenv("AZURE_OPENAI_DEPLOYMENT")
 
 elif API_HOST == "ollama":
-
     client = openai.OpenAI(
         base_url=os.getenv("OLLAMA_ENDPOINT"),
         api_key="nokeyneeded",
@@ -30,12 +28,10 @@ elif API_HOST == "ollama":
     MODEL_NAME = os.getenv("OLLAMA_MODEL")
 
 elif API_HOST == "github":
-
     client = openai.OpenAI(base_url="https://models.inference.ai.azure.com", api_key=os.getenv("GITHUB_TOKEN"))
     MODEL_NAME = os.getenv("GITHUB_MODEL")
 
 else:
-
     client = openai.OpenAI(api_key=os.getenv("OPENAI_KEY"))
     MODEL_NAME = os.getenv("OPENAI_MODEL")
 
@@ -44,6 +40,7 @@ def lookup_weather(city_name=None, zip_code=None):
     """Lookup the weather for a given city name or zip code."""
     print(f"Looking up weather for {city_name or zip_code}...")
     return "It's sunny!"
+
 
 tools = [
     {
