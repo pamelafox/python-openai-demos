@@ -1,4 +1,5 @@
 import os
+import json
 
 import azure.identity
 import openai
@@ -39,6 +40,11 @@ else:
     MODEL_NAME = os.getenv("OPENAI_MODEL")
 
 
+def lookup_weather(city_name=None, zip_code=None):
+    """Lookup the weather for a given city name or zip code."""
+    print(f"Looking up weather for {city_name or zip_code}...")
+    return "It's sunny!"
+
 tools = [
     {
         "type": "function",
@@ -57,6 +63,7 @@ tools = [
                         "description": "The zip code",
                     },
                 },
+                "strict": True,
                 "additionalProperties": False,
             },
         },
@@ -64,14 +71,22 @@ tools = [
 ]
 
 response = client.chat.completions.create(
-    model=MODEL_NAME,
+    model="gpt-4o-mini",
     messages=[
         {"role": "system", "content": "You are a weather chatbot."},
-        {"role": "user", "content": "Hi, whats the weather like in berkeley?"},
+        {"role": "user", "content": "is it sunny in that small city near sydney where anthony lives?"},
     ],
     tools=tools,
+    tool_choice="auto",
 )
 
 print("Response:")
 print(response.choices[0].message.tool_calls[0].function.name)
 print(response.choices[0].message.tool_calls[0].function.arguments)
+
+# Now actually call the function as indicated
+if response.choices[0].message.tool_calls:
+    function_name = response.choices[0].message.tool_calls[0].function.name
+    arguments = json.loads(response.choices[0].message.tool_calls[0].function.arguments)
+    if function_name == "lookup_weather":
+        lookup_weather(**arguments)

@@ -60,18 +60,41 @@ tools = [
                 "additionalProperties": False,
             },
         },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "lookup_movies",
+            "description": "Lookup movies playing in a given city name or zip code.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "city_name": {
+                        "type": "string",
+                        "description": "The city name",
+                    },
+                    "zip_code": {
+                        "type": "string",
+                        "description": "The zip code",
+                    },
+                },
+                "additionalProperties": False,
+            },
+        },
     }
 ]
 
 response = client.chat.completions.create(
     model=MODEL_NAME,
     messages=[
-        {"role": "system", "content": "You are a weather chatbot."},
-        {"role": "user", "content": "Hi, whats the weather like in berkeley?"},
+        {"role": "system", "content": "You are a tourism chatbot."},
+        {"role": "user", "content": "is it rainy enough in sydney to watch movies and which ones are on?"},
     ],
     tools=tools,
+    tool_choice="auto"
 )
 
 print("Response:")
-print(response.choices[0].message.tool_calls[0].function.name)
-print(response.choices[0].message.tool_calls[0].function.arguments)
+for message in response.choices[0].message.tool_calls:
+    print(message.function.name)
+    print(message.function.arguments)
