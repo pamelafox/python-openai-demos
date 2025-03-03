@@ -27,9 +27,9 @@ elif API_HOST == "ollama":
     )
 elif API_HOST == "github":
     llm = ChatOpenAI(
-        model_name=os.getenv("GITHUB_MODEL"),
+        model_name=os.environ["GITHUB_MODEL"],
         openai_api_base="https://models.inference.ai.azure.com",
-        openai_api_key=os.getenv("GITHUB_TOKEN"),
+        openai_api_key=os.environ["GITHUB_TOKEN"],
     )
 else:
     llm = ChatOpenAI(model_name=os.environ["OPENAI_MODEL"], openai_api_key=os.environ["OPENAI_KEY"])
