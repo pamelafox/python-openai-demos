@@ -14,22 +14,19 @@ if API_HOST == "azure":
         azure.identity.DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
     )
     client = openai.AzureOpenAI(
-        api_version=os.getenv("AZURE_OPENAI_VERSION"),
-        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+        api_version=os.environ["AZURE_OPENAI_VERSION"],
+        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
         azure_ad_token_provider=token_provider,
     )
-    MODEL_NAME = os.getenv("AZURE_OPENAI_DEPLOYMENT")
+    MODEL_NAME = os.environ["AZURE_OPENAI_DEPLOYMENT"]
 
 elif API_HOST == "ollama":
-    client = openai.OpenAI(
-        base_url=os.getenv("OLLAMA_ENDPOINT"),
-        api_key="nokeyneeded",
-    )
-    MODEL_NAME = os.getenv("OLLAMA_MODEL")
+    client = openai.OpenAI(base_url=os.environ["OLLAMA_ENDPOINT"], api_key="nokeyneeded")
+    MODEL_NAME = os.environ["OLLAMA_MODEL"]
 
 elif API_HOST == "github":
-    client = openai.OpenAI(base_url="https://models.inference.ai.azure.com", api_key=os.getenv("GITHUB_TOKEN"))
-    MODEL_NAME = os.getenv("GITHUB_MODEL")
+    client = openai.OpenAI(base_url="https://models.inference.ai.azure.com", api_key=os.environ["GITHUB_TOKEN"])
+    MODEL_NAME = os.environ["GITHUB_MODEL"]
 
 else:
     client = openai.OpenAI(api_key=os.environ["OPENAI_KEY"])
@@ -68,7 +65,7 @@ tools = [
 ]
 
 response = client.chat.completions.create(
-    model="gpt-4o-mini",
+    model=MODEL_NAME,
     messages=[
         {"role": "system", "content": "You are a weather chatbot."},
         {"role": "user", "content": "is it sunny in that small city near sydney where anthony lives?"},
@@ -77,7 +74,7 @@ response = client.chat.completions.create(
     tool_choice="auto",
 )
 
-print("Response:")
+print(f"Response from {API_HOST}: \n")
 print(response.choices[0].message.tool_calls[0].function.name)
 print(response.choices[0].message.tool_calls[0].function.arguments)
 

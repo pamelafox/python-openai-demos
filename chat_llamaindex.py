@@ -16,22 +16,22 @@ if API_HOST == "azure":
         azure.identity.DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
     )
     llm = AzureOpenAI(
-        model=os.getenv("OPENAI_MODEL"),
-        deployment_name=os.getenv("AZURE_OPENAI_DEPLOYMENT"),
-        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-        api_version=os.getenv("AZURE_OPENAI_VERSION"),
+        model=os.environ["OPENAI_MODEL"],
+        deployment_name=os.environ["AZURE_OPENAI_DEPLOYMENT"],
+        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
+        api_version=os.environ["AZURE_OPENAI_VERSION"],
         use_azure_ad=True,
         azure_ad_token_provider=token_provider,
     )
 elif API_HOST == "ollama":
     llm = OpenAILike(
-        model=os.getenv("OLLAMA_MODEL"), api_base=os.getenv("OLLAMA_ENDPOINT"), api_key="fake", is_chat_model=True
+        model=os.environ["OLLAMA_MODEL"], api_base=os.environ["OLLAMA_ENDPOINT"], api_key="fake", is_chat_model=True
     )
 elif API_HOST == "github":
     llm = OpenAILike(
-        model=os.getenv("GITHUB_MODEL"),
+        model=os.environ["GITHUB_MODEL"],
         api_base="https://models.inference.ai.azure.com",
-        api_key=os.getenv("GITHUB_TOKEN"),
+        api_key=os.environ["GITHUB_TOKEN"],
         is_chat_model=True,
     )
 else:

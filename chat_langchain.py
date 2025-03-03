@@ -14,22 +14,22 @@ if API_HOST == "azure":
         azure.identity.DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
     )
     llm = AzureChatOpenAI(
-        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-        azure_deployment=os.getenv("AZURE_OPENAI_DEPLOYMENT"),
-        openai_api_version=os.getenv("AZURE_OPENAI_VERSION"),
+        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
+        azure_deployment=os.environ["AZURE_OPENAI_DEPLOYMENT"],
+        openai_api_version=os.environ["AZURE_OPENAI_VERSION"],
         azure_ad_token_provider=token_provider,
     )
 elif API_HOST == "ollama":
     llm = ChatOpenAI(
-        model_name=os.getenv("OLLAMA_MODEL"),
-        openai_api_base=os.getenv("OLLAMA_ENDPOINT"),
-        openai_api_key=os.getenv("OPENAI_KEY"),
+        model_name=os.environ["OLLAMA_MODEL"],
+        openai_api_base=os.environ["OLLAMA_ENDPOINT"],
+        openai_api_key=os.environ["OPENAI_KEY"],
     )
 elif API_HOST == "github":
     llm = ChatOpenAI(
-        model_name=os.getenv("GITHUB_MODEL"),
+        model_name=os.environ["GITHUB_MODEL"],
         openai_api_base="https://models.inference.ai.azure.com",
-        openai_api_key=os.getenv("GITHUB_TOKEN"),
+        openai_api_key=os.environ["GITHUB_TOKEN"],
     )
 else:
     llm = ChatOpenAI(model_name=os.environ["OPENAI_MODEL"], openai_api_key=os.environ["OPENAI_KEY"])
