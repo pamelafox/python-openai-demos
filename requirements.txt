@@ -6,3 +6,4 @@ langchain-openai
 llama-index-llms-azure-openai
 llama-index-llms-openai
 llama-index-llms-openai-like
+pydantic-ai

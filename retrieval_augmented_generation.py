@@ -32,8 +32,8 @@ elif API_HOST == "github":
     MODEL_NAME = os.getenv("GITHUB_MODEL")
 
 else:
-    client = openai.OpenAI(api_key=os.getenv("OPENAI_KEY"))
-    MODEL_NAME = os.getenv("OPENAI_MODEL")
+    client = openai.OpenAI(api_key=os.environ["OPENAI_KEY"])
+    MODEL_NAME = os.environ["OPENAI_MODEL"]
 
 
 USER_MESSAGE = "how fast is the prius v?"

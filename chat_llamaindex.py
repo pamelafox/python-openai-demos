@@ -35,7 +35,7 @@ elif API_HOST == "github":
         is_chat_model=True,
     )
 else:
-    llm = OpenAI(model=os.getenv("OPENAI_MODEL"), api_key=os.getenv("OPENAI_KEY"))
+    llm = OpenAI(model=os.environ["OPENAI_MODEL"], api_key=os.environ["OPENAI_KEY"])
 
 chat_msgs = [
     ChatMessage(
