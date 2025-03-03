@@ -28,8 +28,8 @@ elif API_HOST == "github":
     client = openai.OpenAI(base_url="https://models.inference.ai.azure.com", api_key=os.getenv("GITHUB_TOKEN"))
     MODEL_NAME = os.getenv("GITHUB_MODEL")
 else:
-    client = openai.OpenAI(api_key=os.getenv("OPENAI_KEY"))
-    MODEL_NAME = os.getenv("OPENAI_MODEL")
+    client = openai.OpenAI(api_key=os.environ["OPENAI_KEY"])
+    MODEL_NAME = os.environ["OPENAI_MODEL"]
 
 try:
     response = client.chat.completions.create(

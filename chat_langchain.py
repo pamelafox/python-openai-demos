@@ -32,7 +32,7 @@ elif API_HOST == "github":
         openai_api_key=os.getenv("GITHUB_TOKEN"),
     )
 else:
-    llm = ChatOpenAI(model_name=os.getenv("OPENAI_MODEL"), openai_api_key=os.getenv("OPENAI_KEY"))
+    llm = ChatOpenAI(model_name=os.environ["OPENAI_MODEL"], openai_api_key=os.environ["OPENAI_KEY"])
 
 
 prompt = ChatPromptTemplate.from_messages(

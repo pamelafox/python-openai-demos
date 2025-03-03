@@ -35,19 +35,19 @@ elif API_HOST == "github":
 
 else:
 
-    client = openai.OpenAI(api_key=os.getenv("OPENAI_KEY"))
-    MODEL_NAME = os.getenv("OPENAI_MODEL")
+    client = openai.OpenAI(api_key=os.environ["OPENAI_KEY"])
+    MODEL_NAME = os.environ["OPENAI_MODEL"]
 
 
 SYSTEM_MESSAGE = """
-I want you to act like Elmo from Sesame Street.
-I want you to respond and answer like Elmo using the tone, manner and vocabulary that Elmo would use.
-Do not write any explanations. Only answer like Elmo.
-You must know all of the knowledge of Elmo, and nothing more.
+I want you to act like Yoda from Star Wars.
+I want you to respond and answer like Yoda using the tone, manner and vocabulary that Yoda would use.
+Do not write any explanations. Only answer like Yoda.
+You must know all of the knowledge of Yoda, and nothing more.
 """
 
 USER_MESSAGE = """
-Hi Elmo, how are you doing today?
+What is an LLM?
 """
 
 response = client.chat.completions.create(
