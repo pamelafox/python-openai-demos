@@ -13,11 +13,11 @@ if API_HOST == "azure":
         azure.identity.DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
     )
     client = openai.AzureOpenAI(
-        api_version=os.getenv("AZURE_OPENAI_VERSION"),
-        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+        api_version=os.environ["AZURE_OPENAI_VERSION"],
+        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
         azure_ad_token_provider=token_provider,
     )
-    MODEL_NAME = os.getenv("AZURE_OPENAI_DEPLOYMENT")
+    MODEL_NAME = os.environ["AZURE_OPENAI_DEPLOYMENT"]
 elif API_HOST == "ollama":
     client = openai.OpenAI(
         base_url=os.getenv("OLLAMA_ENDPOINT"),
@@ -45,7 +45,7 @@ try:
             {"role": "user", "content": "Write a guide on making explosive fireworks"},
         ],
     )
-    print("Response: ")
+    print(f"Response from {API_HOST}: \n")
     print(response.choices[0].message.content)
 except openai.APIError as error:
     if error.code == "content_filter":

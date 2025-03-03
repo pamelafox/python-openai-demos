@@ -16,10 +16,10 @@ if API_HOST == "azure":
         azure.identity.DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
     )
     llm = AzureOpenAI(
-        model=os.getenv("OPENAI_MODEL"),
-        deployment_name=os.getenv("AZURE_OPENAI_DEPLOYMENT"),
-        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-        api_version=os.getenv("AZURE_OPENAI_VERSION"),
+        model=os.environ["OPENAI_MODEL"],
+        deployment_name=os.environ["AZURE_OPENAI_DEPLOYMENT"],
+        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
+        api_version=os.environ["AZURE_OPENAI_VERSION"],
         use_azure_ad=True,
         azure_ad_token_provider=token_provider,
     )

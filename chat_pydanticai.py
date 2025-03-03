@@ -15,8 +15,8 @@ if API_HOST == "azure":
         azure.identity.DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
     )
     client = AsyncAzureOpenAI(
-        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-        api_version=os.getenv("AZURE_OPENAI_VERSION"),
+        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
+        api_version=os.environ["AZURE_OPENAI_VERSION"],
         azure_ad_token_provider=token_provider,
     )
     model = OpenAIModel(os.environ["AZURE_OPENAI_DEPLOYMENT"], openai_client=client)
