@@ -21,11 +21,8 @@ if API_HOST == "azure":
     MODEL_NAME = os.environ["AZURE_OPENAI_DEPLOYMENT"]
 
 elif API_HOST == "ollama":
-    client = openai.OpenAI(
-        base_url=os.getenv("OLLAMA_ENDPOINT"),
-        api_key="nokeyneeded",
-    )
-    MODEL_NAME = os.getenv("OLLAMA_MODEL")
+    client = openai.OpenAI(base_url=os.environ["OLLAMA_ENDPOINT"], api_key="nokeyneeded")
+    MODEL_NAME = os.environ["OLLAMA_MODEL"]
 
 elif API_HOST == "github":
     client = openai.OpenAI(base_url="https://models.inference.ai.azure.com", api_key=os.environ["GITHUB_TOKEN"])
@@ -77,7 +74,7 @@ response = client.chat.completions.create(
     tool_choice="auto",
 )
 
-print("Response:")
+print(f"Response from {API_HOST}: \n")
 print(response.choices[0].message.tool_calls[0].function.name)
 print(response.choices[0].message.tool_calls[0].function.arguments)
 

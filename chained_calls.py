@@ -22,11 +22,8 @@ if API_HOST == "azure":
 
 elif API_HOST == "ollama":
 
-    client = openai.OpenAI(
-        base_url=os.getenv("OLLAMA_ENDPOINT"),
-        api_key="nokeyneeded",
-    )
-    MODEL_NAME = os.getenv("OLLAMA_MODEL")
+    client = openai.OpenAI(base_url=os.environ["OLLAMA_ENDPOINT"], api_key="nokeyneeded")
+    MODEL_NAME = os.environ["OLLAMA_MODEL"]
 
 elif API_HOST == "github":
 

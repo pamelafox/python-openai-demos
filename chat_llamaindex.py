@@ -25,7 +25,7 @@ if API_HOST == "azure":
     )
 elif API_HOST == "ollama":
     llm = OpenAILike(
-        model=os.getenv("OLLAMA_MODEL"), api_base=os.getenv("OLLAMA_ENDPOINT"), api_key="fake", is_chat_model=True
+        model=os.environ["OLLAMA_MODEL"], api_base=os.environ["OLLAMA_ENDPOINT"], api_key="fake", is_chat_model=True
     )
 elif API_HOST == "github":
     llm = OpenAILike(

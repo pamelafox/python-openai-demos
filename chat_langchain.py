@@ -21,9 +21,9 @@ if API_HOST == "azure":
     )
 elif API_HOST == "ollama":
     llm = ChatOpenAI(
-        model_name=os.getenv("OLLAMA_MODEL"),
-        openai_api_base=os.getenv("OLLAMA_ENDPOINT"),
-        openai_api_key=os.getenv("OPENAI_KEY"),
+        model_name=os.environ["OLLAMA_MODEL"],
+        openai_api_base=os.environ["OLLAMA_ENDPOINT"],
+        openai_api_key=os.environ["OPENAI_KEY"],
     )
 elif API_HOST == "github":
     llm = ChatOpenAI(
