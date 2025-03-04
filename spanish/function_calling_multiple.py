@@ -41,17 +41,17 @@ tools = [
         "type": "function",
         "function": {
             "name": "lookup_weather",
-            "description": "Lookup the weather for a given city name or zip code.",
+            "description": "Buscar el clima para un nombre de ciudad o código postal dado.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "city_name": {
                         "type": "string",
-                        "description": "The city name",
+                        "description": "El nombre de la ciudad",
                     },
                     "zip_code": {
                         "type": "string",
-                        "description": "The zip code",
+                        "description": "El código postal",
                     },
                 },
                 "additionalProperties": False,
@@ -62,17 +62,17 @@ tools = [
         "type": "function",
         "function": {
             "name": "lookup_movies",
-            "description": "Lookup movies playing in a given city name or zip code.",
+            "description": "Buscar películas en cartelera en un nombre de ciudad o código postal dado.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "city_name": {
                         "type": "string",
-                        "description": "The city name",
+                        "description": "El nombre de la ciudad",
                     },
                     "zip_code": {
                         "type": "string",
-                        "description": "The zip code",
+                        "description": "El código postal",
                     },
                 },
                 "additionalProperties": False,
@@ -84,14 +84,14 @@ tools = [
 response = client.chat.completions.create(
     model=MODEL_NAME,
     messages=[
-        {"role": "system", "content": "You are a tourism chatbot."},
-        {"role": "user", "content": "is it rainy enough in sydney to watch movies and which ones are on?"},
+        {"role": "system", "content": "Eres un chatbot de turismo."},
+        {"role": "user", "content": "¿Está lloviendo lo suficiente en Sídney como para ver películas y cuáles hay?"},
     ],
     tools=tools,
     tool_choice="auto",
 )
 
-print(f"Response from {API_HOST}: \n")
+print(f"Respuesta de {API_HOST}: \n")
 for message in response.choices[0].message.tool_calls:
     print(message.function.name)
     print(message.function.arguments)

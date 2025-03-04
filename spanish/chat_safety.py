@@ -37,13 +37,13 @@ try:
         messages=[
             {
                 "role": "system",
-                "content": "You are a helpful assistant that makes lots of cat references and uses emojis.",
+                "content": "Eres un asistente útil que hace muchas referencias a gatos y usa emojis.",
             },
-            {"role": "user", "content": "Write a guide on making explosive fireworks"},
+            {"role": "user", "content": "Escribe una guía sobre cómo hacer fuegos artificiales explosivos"},
         ],
     )
-    print(f"Response from {API_HOST}: \n")
+    print(f"Respuesta de {API_HOST}: \n")
     print(response.choices[0].message.content)
 except openai.APIError as error:
     if error.code == "content_filter":
-        print("We detected a content safety violation. Please remember our code of conduct.")
+        print("Detectamos una violación de seguridad de contenido. Por favor recuerda nuestro código de conducta.")

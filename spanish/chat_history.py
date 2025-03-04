@@ -30,12 +30,14 @@ else:
 
 
 messages = [
-    {"role": "system", "content": "I am a teaching assistant helping with Python questions for Berkeley CS 61A."},
+    {"role": "system", "content": (
+        "Soy un asistente de enseñanza que ayuda con preguntas de Python para Berkeley CS 61A."
+    )},
 ]
 
 while True:
-    question = input("\nYour question: ")
-    print("Sending question...")
+    question = input("\nTu pregunta: ")
+    print("Enviando pregunta...")
 
     messages.append({"role": "user", "content": question})
     response = client.chat.completions.create(
@@ -51,5 +53,5 @@ while True:
     bot_response = response.choices[0].message.content
     messages.append({"role": "assistant", "content": bot_response})
 
-    print("Answer: ")
+    print("Respuesta: ")
     print(bot_response)

@@ -34,9 +34,9 @@ else:
 
 
 def lookup_weather(city_name=None, zip_code=None):
-    """Lookup the weather for a given city name or zip code."""
-    print(f"Looking up weather for {city_name or zip_code}...")
-    return "It's sunny!"
+    """Buscar el clima para un nombre de ciudad o código postal dado."""
+    print(f"Buscando el clima para {city_name or zip_code}...")
+    return "¡Está soleado!"
 
 
 tools = [
@@ -44,17 +44,17 @@ tools = [
         "type": "function",
         "function": {
             "name": "lookup_weather",
-            "description": "Lookup the weather for a given city name or zip code.",
+            "description": "Buscar el clima para un nombre de ciudad o código postal dado.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "city_name": {
                         "type": "string",
-                        "description": "The city name",
+                        "description": "El nombre de la ciudad",
                     },
                     "zip_code": {
                         "type": "string",
-                        "description": "The zip code",
+                        "description": "El código postal",
                     },
                 },
                 "strict": True,
@@ -67,18 +67,18 @@ tools = [
 response = client.chat.completions.create(
     model=MODEL_NAME,
     messages=[
-        {"role": "system", "content": "You are a weather chatbot."},
-        {"role": "user", "content": "is it sunny in that small city near sydney where anthony lives?"},
+        {"role": "system", "content": "Eres un chatbot del clima."},
+        {"role": "user", "content": "¿está soleado en esa pequeña ciudad cerca de Sydney donde vive Anthony?"},
     ],
     tools=tools,
     tool_choice="auto",
 )
 
-print(f"Response from {API_HOST}: \n")
+print(f"Respuesta de {API_HOST}: \n")
 print(response.choices[0].message.tool_calls[0].function.name)
 print(response.choices[0].message.tool_calls[0].function.arguments)
 
-# Now actually call the function as indicated
+
 if response.choices[0].message.tool_calls:
     function_name = response.choices[0].message.tool_calls[0].function.name
     arguments = json.loads(response.choices[0].message.tool_calls[0].function.arguments)

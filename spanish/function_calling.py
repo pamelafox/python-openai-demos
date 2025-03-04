@@ -41,17 +41,17 @@ tools = [
         "type": "function",
         "function": {
             "name": "lookup_weather",
-            "description": "Lookup the weather for a given city name or zip code.",
+            "description": "Buscar el clima para un nombre de ciudad o código postal dado.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "city_name": {
                         "type": "string",
-                        "description": "The city name",
+                        "description": "El nombre de la ciudad",
                     },
                     "zip_code": {
                         "type": "string",
-                        "description": "The zip code",
+                        "description": "El código postal",
                     },
                 },
                 "additionalProperties": False,
@@ -63,12 +63,12 @@ tools = [
 response = client.chat.completions.create(
     model=MODEL_NAME,
     messages=[
-        {"role": "system", "content": "You are a weather chatbot."},
-        {"role": "user", "content": "Hi, whats the weather like in berkeley?"},
+        {"role": "system", "content": "Eres un chatbot del clima."},
+        {"role": "user", "content": "Hola, ¿cómo está el clima en Berkeley?"},
     ],
     tools=tools,
 )
 
-print(f"Response from {API_HOST}: \n")
+print(f"Respuesta de {API_HOST}: \n")
 print(response.choices[0].message.tool_calls[0].function.name)
 print(response.choices[0].message.tool_calls[0].function.arguments)

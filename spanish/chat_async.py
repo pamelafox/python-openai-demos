@@ -31,14 +31,14 @@ else:
 
 
 async def generate_response(location):
-    print("Generating response for", location)
+    print("Generando respuesta para", location)
     response = await client.chat.completions.create(
         model=MODEL_NAME,
         messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "system", "content": "Eres un asistente útil."},
             {
                 "role": "user",
-                "content": f"Name a single place I should visit on my trip to {location} and describe in one sentence",
+                "content": f"Nombra un solo lugar que debería visitar en mi viaje a {location} y descríbelo en una oración",
             },
         ],
         temperature=1,
@@ -48,19 +48,19 @@ async def generate_response(location):
         presence_penalty=0,
         stop=None,
     )
-    print("Got response for ", location)
+    print("Obtuve respuesta para ", location)
     return response.choices[0].message.content
 
 
 async def single():
-    print(await generate_response("Tokyo"))
+    print(await generate_response("Tokio"))
 
 
 async def multiple():
     answers = await asyncio.gather(
-        generate_response("Tokyo"),
+        generate_response("Tokio"),
         generate_response("Berkeley"),
-        generate_response("Singapore"),
+        generate_response("Singapur"),
     )
     for answer in answers:
         print(answer, "\n")

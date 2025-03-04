@@ -30,12 +30,12 @@ else:
 
 
 messages = [
-    {"role": "system", "content": "I am a large language model."},
+    {"role": "system", "content": "Soy un large language model."},
 ]
 
 while True:
-    question = input("\nYour question: ")
-    print("Sending question...")
+    question = input("\nTu pregunta: ")
+    print("Enviando pregunta...")
 
     messages.append({"role": "user", "content": question})
     response = client.chat.completions.create(
@@ -50,7 +50,7 @@ while True:
         stream=True,
     )
 
-    print("\nAnswer: ")
+    print("\nRespuesta: ")
     bot_response = ""
     for event in response:
         if event.choices and event.choices[0].delta.content:

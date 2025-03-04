@@ -33,34 +33,34 @@ else:
     MODEL_NAME = os.environ["OPENAI_MODEL"]
 
 
-USER_MESSAGE = "how fast is the prius v?"
+USER_MESSAGE = "¿qué tan rápido es el Prius v?"
 
-# Open the CSV and store in a list
-with open("hybrid.csv") as file:
+# Abrir el CSV y almacenar en una lista
+with open("hybridos.csv") as file:
     reader = csv.reader(file)
     rows = list(reader)
 
-# Normalize the user question to replace punctuation and make lowercase
+# Normalizar la pregunta del usuario para reemplazar puntuación y convertir a minúsculas
 normalized_message = USER_MESSAGE.lower().replace("?", "").replace("(", " ").replace(")", " ")
 
-# Search the CSV for user question using very naive search
+# Buscar en el CSV la pregunta del usuario usando una búsqueda muy simple
 words = normalized_message.split()
 matches = []
 for row in rows[1:]:
-    # if the word matches any word in row, add the row to the matches
+    # si la palabra coincide con cualquier palabra en la fila, añadir la fila a las coincidencias
     if any(word in row[0].lower().split() for word in words) or any(word in row[5].lower().split() for word in words):
         matches.append(row)
 
-# Format as a markdown table, since language models understand markdown
+# Formatear como una tabla markdown, ya que los modelos de lenguaje entienden markdown
 matches_table = " | ".join(rows[0]) + "\n" + " | ".join(" --- " for _ in range(len(rows[0]))) + "\n"
 matches_table += "\n".join(" | ".join(row) for row in matches)
-print(f"Found {len(matches)} matches:")
+print(f"Encontradas {len(matches)} coincidencias:")
 print(matches_table)
 
-# Now we can use the matches to generate a response
+# Ahora podemos usar las coincidencias para generar una respuesta
 SYSTEM_MESSAGE = """
-You are a helpful assistant that answers questions about cars based off a hybrid car data set.
-You must use the data set to answer the questions, you should not provide any info that is not in the provided sources.
+Eres un asistente útil que responde preguntas sobre coches basándote en un conjunto de datos de coches híbridos.
+Debes usar el conjunto de datos para responder las preguntas, no debes proporcionar ninguna información que no esté en las fuentes proporcionadas.
 """
 
 response = client.chat.completions.create(
@@ -68,9 +68,9 @@ response = client.chat.completions.create(
     temperature=0.3,
     messages=[
         {"role": "system", "content": SYSTEM_MESSAGE},
-        {"role": "user", "content": USER_MESSAGE + "\nSources: " + matches_table},
+        {"role": "user", "content": USER_MESSAGE + "\nFuentes: " + matches_table},
     ],
 )
 
-print(f"Response from {API_HOST}: \n")
+print(f"Respuesta de {API_HOST}: \n")
 print(response.choices[0].message.content)
