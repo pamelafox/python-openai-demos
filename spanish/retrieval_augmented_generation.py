@@ -60,7 +60,8 @@ print(matches_table)
 # Ahora podemos usar las coincidencias para generar una respuesta
 SYSTEM_MESSAGE = """
 Eres un asistente útil que responde preguntas sobre coches basándote en un conjunto de datos de coches híbridos.
-Debes usar el conjunto de datos para responder las preguntas, no debes proporcionar ninguna información que no esté en las fuentes proporcionadas.
+Debes usar el conjunto de datos para responder las preguntas, 
+no debes proporcionar ninguna información que no esté en las fuentes proporcionadas.
 """
 
 response = client.chat.completions.create(
