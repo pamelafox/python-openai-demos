@@ -38,7 +38,10 @@ async def generate_response(location):
             {"role": "system", "content": "Eres un asistente útil."},
             {
                 "role": "user",
-                "content": f"Nombra un solo lugar que debería visitar en mi viaje a {location} y descríbelo en una oración",
+                "content": (
+                    f"Nombra un solo lugar que debería visitar en mi viaje a {location} "
+                    "y descríbelo en una oración"
+                ),
             },
         ],
         temperature=1,

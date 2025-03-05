@@ -52,7 +52,7 @@ response = client.chat.completions.create(
     messages=[
         {"role": "system", "content": SYSTEM_MESSAGE},
         {"role": "user", "content": "¿Cuál es la capital de Francia?"},
-        {"role": "assistant", "content": "¿Puedes recordar el nombre de la ciudad que es conocida por la Torre Eiffel?"},
+        {"role": "assistant", "content": "¿Recuerdes el nombre de la ciudad que es conocida por la Torre Eiffel?"},
         {"role": "user", "content": "¿Cuál es la raíz cuadrada de 144?"},
         {"role": "assistant", "content": "¿Qué número multiplicado por sí mismo es igual a 144?"},
         {"role": "user", "content": "¿Cuál es el número atómico del oxígeno?"},
