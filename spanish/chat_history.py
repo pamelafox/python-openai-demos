@@ -30,9 +30,10 @@ else:
 
 
 messages = [
-    {"role": "system", "content": (
-        "Soy un asistente de enseñanza que ayuda con preguntas de Python para Berkeley CS 61A."
-    )},
+    {
+        "role": "system",
+        "content": ("Soy un asistente de enseñanza que ayuda con preguntas de Python para Berkeley CS 61A."),
+    },
 ]
 
 while True:

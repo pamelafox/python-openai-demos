@@ -39,8 +39,7 @@ async def generate_response(location):
             {
                 "role": "user",
                 "content": (
-                    f"Nombra un solo lugar que debería visitar en mi viaje a {location} "
-                    "y descríbelo en una oración"
+                    f"Nombra un solo lugar que debería visitar en mi viaje a {location} y descríbelo en una oración"
                 ),
             },
         ],
