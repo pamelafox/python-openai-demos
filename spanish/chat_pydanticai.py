@@ -31,9 +31,9 @@ else:
     model = OpenAIModel(os.environ["OPENAI_MODEL"], api_key=os.environ["OPENAI_KEY"])
 
 
-agent = Agent(model, system_prompt="You are a helpful assistant that makes lots of cat references and uses emojis.")
+agent = Agent(model, system_prompt="Eres un asistente útil que hace muchas referencias a gatos y usa emojis.")
 
-result = agent.run_sync("Write a haiku about a hungry cat who wants tuna")
+result = agent.run_sync("Escribe un haiku sobre un gato hambriento que quiere atún")
 
-print(f"Response from {API_HOST}: \n")
+print(f"Respuesta de {API_HOST}: \n")
 print(result.data)
