@@ -98,7 +98,8 @@ def rerank(query, retrieved_documents):
     """
     encoder = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
     scores = encoder.predict([(query, doc["text"]) for doc in retrieved_documents])
-    return [v for _, v in sorted(zip(scores, retrieved_documents), reverse=True)]
+    scored_documents = [v for _, v in sorted(zip(scores, retrieved_documents), reverse=True)]
+    return scored_documents
 
 
 def hybrid_search(query, limit):
