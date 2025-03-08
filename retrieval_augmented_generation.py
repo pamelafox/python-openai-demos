@@ -33,35 +33,29 @@ else:
     MODEL_NAME = os.environ["OPENAI_MODEL"]
 
 
-def search(query):
-    # Open the CSV and store in a list
-    with open("hybrid.csv") as file:
-        reader = csv.reader(file)
-        rows = list(reader)
+USER_MESSAGE = "how fast is the prius v?"
 
-    # Normalize the user question to replace punctuation and make lowercase
-    normalized_message = query.lower().replace("?", "").replace("(", " ").replace(")", " ")
-    # Search the CSV for user question using very naive search
-    words = normalized_message.split()
-    matching_rows = []
-    for row in rows[1:]:
-        # if the word matches any word in row, add the row to the matches
-        if any(word in row[0].lower().split() for word in words) or any(
-            word in row[5].lower().split() for word in words
-        ):
-            matching_rows.append(row)
-    # Format as a markdown table, since language models understand markdown
-    matches_table = " | ".join(rows[0]) + "\n" + " | ".join(" --- " for _ in range(len(rows[0]))) + "\n"
-    matches_table += "\n".join(" | ".join(row) for row in matches)
-    return matches_table
+# Open the CSV and store in a list
+with open("hybrid.csv") as file:
+    reader = csv.reader(file)
+    rows = list(reader)
 
+# Normalize the user question to replace punctuation and make lowercase
+normalized_message = USER_MESSAGE.lower().replace("?", "").replace("(", " ").replace(")", " ")
 
-user_question = "how fast is the prius v?"
+# Search the CSV for user question using very naive search
+words = normalized_message.split()
+matches = []
+for row in rows[1:]:
+    # if the word matches any word in row, add the row to the matches
+    if any(word in row[0].lower().split() for word in words) or any(word in row[5].lower().split() for word in words):
+        matches.append(row)
 
-matches = search(user_question)
-
-print("Found matches:")
-print(matches)
+# Format as a markdown table, since language models understand markdown
+matches_table = " | ".join(rows[0]) + "\n" + " | ".join(" --- " for _ in range(len(rows[0]))) + "\n"
+matches_table += "\n".join(" | ".join(row) for row in matches)
+print(f"Found {len(matches)} matches:")
+print(matches_table)
 
 # Now we can use the matches to generate a response
 SYSTEM_MESSAGE = """
@@ -74,7 +68,7 @@ response = client.chat.completions.create(
     temperature=0.3,
     messages=[
         {"role": "system", "content": SYSTEM_MESSAGE},
-        {"role": "user", "content": user_question + "\nSources: " + matches},
+        {"role": "user", "content": USER_MESSAGE + "\nSources: " + matches_table},
     ],
 )
 

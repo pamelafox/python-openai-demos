@@ -16,6 +16,14 @@ Plus these scripts to demonstrate additional features:
 * [`chat_langchain.py`](./chat_langchain.py): Uses the langchain SDK to generate chat completions. [Learn more from Langchain docs](https://python.langchain.com/docs/get_started/quickstart)
 * [`chat_llamaindex.py`](./chat_llamaindex.py): Uses the LlamaIndex SDK to generate chat completions. [Learn more from LlamaIndex docs](https://docs.llamaindex.ai/en/stable/)
 
+These scripts for RAG:
+
+* [`rag_csv.py`](./rag.py): Retrieves matching results from a CSV file and uses them to answer user's question.
+* [`rag_multiturn.py`](./rag_multiturn.py): The same idea, but with a back-and-forth chat interface using `input()` which keeps track of past messages and sends them with each chat completion call.
+* [`rag_queryrewrite.py`](./rag_queryrewrite.py): Adds a query rewriting step to the RAG process, where the user's question is rewritten to improve the retrieval results.
+* [`rag_documents_ingestion.py`](./rag_ingestion.py): Ingests PDFs by using pymupdf to convert to markdown, then using Langchain to split into chunks, then using OpenAI to embed the chunks, and finally storing in a local JSON file.
+* [`rag_documents_flow.py`](./rag_pdfs.py): A RAG flow that retrieves matching results from the local JSON file created by `rag_documents_ingestion.py`.
+
 ## Setting up the environment
 
 If you open this up in a Dev Container or GitHub Codespaces, everything will be setup for you.
