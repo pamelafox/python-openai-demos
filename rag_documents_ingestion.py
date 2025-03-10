@@ -1,5 +1,6 @@
 import json
 import os
+import pathlib
 
 import azure.identity
 import openai
@@ -34,12 +35,12 @@ else:
     client = openai.OpenAI(api_key=os.environ["OPENAI_KEY"])
     MODEL_NAME = os.environ["OPENAI_MODEL"]
 
-
-filenames = ["data/California_carpenter_bee.pdf", "data/Centris_pallida.pdf", "data/Western_honey_bee.pdf"]
+data_dir = pathlib.Path(os.path.dirname(__file__)) / "data"
+filenames = ["California_carpenter_bee.pdf", "Centris_pallida.pdf", "Western_honey_bee.pdf", "Aphideater_hoverfly.pdf"]
 all_chunks = []
 for filename in filenames:
     # Extract text from the PDF file
-    md_text = pymupdf4llm.to_markdown(filename)
+    md_text = pymupdf4llm.to_markdown(data_dir / filename)
 
     # Split the text into smaller chunks
     text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
