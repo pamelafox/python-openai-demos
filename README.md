@@ -2,6 +2,9 @@
 
 This repository contains a collection of Python scripts that demonstrate how to use the OpenAI API to generate chat completions.
 
+## OpenAI package
+
+These scripts use the OpenAI package to demonstrate how to use the OpenAI API.
 In increasing order of complexity, the scripts are:
 
 1. [`chat.py`](./chat.py): A simple script that demonstrates how to use the OpenAI API to generate chat completions.
@@ -14,9 +17,9 @@ Plus these scripts to demonstrate additional features:
 * [`chat_safety.py`](./chat_safety.py): The simple script with exception handling for Azure AI Content Safety filter errors.
 * [`chat_async.py`](./chat_async.py): Uses the async clients to make asynchronous calls, including an example of sending off multiple requests at once using `asyncio.gather`.
 
-## Using popular libraries
+## Popular LLM libraries
 
-These scripts use popular libraries to demonstrate how to use the OpenAI API with them:
+These scripts use popular LLM libraries to demonstrate how to use the OpenAI API with them:
 
 * [`chat_langchain.py`](./chat_langchain.py): Uses the Langchain package to generate chat completions. [Learn more from Langchain docs](https://python.langchain.com/docs/get_started/quickstart)
 * [`chat_llamaindex.py`](./chat_llamaindex.py): Uses the LlamaIndex package to generate chat completions. [Learn more from LlamaIndex docs](https://docs.llamaindex.ai/en/stable/)
