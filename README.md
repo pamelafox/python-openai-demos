@@ -2,6 +2,9 @@
 
 This repository contains a collection of Python scripts that demonstrate how to use the OpenAI API to generate chat completions.
 
+## OpenAI package
+
+These scripts use the OpenAI package to demonstrate how to use the OpenAI API.
 In increasing order of complexity, the scripts are:
 
 1. [`chat.py`](./chat.py): A simple script that demonstrates how to use the OpenAI API to generate chat completions.
@@ -13,8 +16,33 @@ Plus these scripts to demonstrate additional features:
 
 * [`chat_safety.py`](./chat_safety.py): The simple script with exception handling for Azure AI Content Safety filter errors.
 * [`chat_async.py`](./chat_async.py): Uses the async clients to make asynchronous calls, including an example of sending off multiple requests at once using `asyncio.gather`.
-* [`chat_langchain.py`](./chat_langchain.py): Uses the langchain SDK to generate chat completions. [Learn more from Langchain docs](https://python.langchain.com/docs/get_started/quickstart)
-* [`chat_llamaindex.py`](./chat_llamaindex.py): Uses the LlamaIndex SDK to generate chat completions. [Learn more from LlamaIndex docs](https://docs.llamaindex.ai/en/stable/)
+
+## Popular LLM libraries
+
+These scripts use popular LLM libraries to demonstrate how to use the OpenAI API with them:
+
+* [`chat_langchain.py`](./chat_langchain.py): Uses the Langchain package to generate chat completions. [Learn more from Langchain docs](https://python.langchain.com/docs/get_started/quickstart)
+* [`chat_llamaindex.py`](./chat_llamaindex.py): Uses the LlamaIndex package to generate chat completions. [Learn more from LlamaIndex docs](https://docs.llamaindex.ai/en/stable/)
+* [`chat_pydanticai.py`](./chat_pydanticai.py): Uses the PydanticAI package to generate chat completions. [Learn more from PydanticAI docs](https://ai.pydantic.dev/)
+
+## Retrieval-Augmented Generation (RAG)
+
+These scripts demonstrate how to use the OpenAI API for Retrieval-Augmented Generation (RAG) tasks, where the model retrieves relevant information from a source and uses it to generate a response.
+
+First install the RAG dependencies:
+
+```bash
+python -m pip install -r requirements-rag.txt
+```
+
+Then run the scripts (in order of increasing complexity):
+
+* [`rag_csv.py`](./rag.py): Retrieves matching results from a CSV file and uses them to answer user's question.
+* [`rag_multiturn.py`](./rag_multiturn.py): The same idea, but with a back-and-forth chat interface using `input()` which keeps track of past messages and sends them with each chat completion call.
+* [`rag_queryrewrite.py`](./rag_queryrewrite.py): Adds a query rewriting step to the RAG process, where the user's question is rewritten to improve the retrieval results.
+* [`rag_documents_ingestion.py`](./rag_ingestion.py): Ingests PDFs by using pymupdf to convert to markdown, then using Langchain to split into chunks, then using OpenAI to embed the chunks, and finally storing in a local JSON file.
+* [`rag_documents_flow.py`](./rag_pdfs.py): A RAG flow that retrieves matching results from the local JSON file created by `rag_documents_ingestion.py`.
+* [`rag_documents_hybrid.py`](./rag_documents_hybrid.py): A RAG flow that implements a hybrid retrieval with both vector and keyword search, merging with Reciprocal Rank Fusion (RRF), and semantic re-ranking with a cross-encoder model.
 
 ## Setting up the environment
 
