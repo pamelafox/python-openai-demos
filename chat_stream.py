@@ -41,7 +41,7 @@ completion = client.chat.completions.create(
     stream=True,
 )
 
-print(f"Response from {API_HOST}: \n")
+print(f"Response from {MODEL_NAME} on {API_HOST}: \n")
 for event in completion:
     if event.choices:
         content = event.choices[0].delta.content

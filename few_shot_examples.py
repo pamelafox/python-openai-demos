@@ -62,5 +62,5 @@ response = client.chat.completions.create(
 )
 
 
-print(f"Response from {API_HOST}: \n")
+print(f"Response from {MODEL_NAME} on {API_HOST}: \n")
 print(response.choices[0].message.content)
