@@ -1,0 +1,21 @@
+POST https://{{$dotenv SERVICE}}.openai.azure.com/openai/deployments/{{$dotenv DEPLOYMENT}}/chat/completions?api-version=2024-02-15-preview
+Authorization: Bearer {{$dotenv TOKEN}}
+Content-Type: application/json
+
+{
+    "messages": [
+        {
+        "role":"system",
+        "content":"You are a helpful assistant that answers questions about cars based off a hybrid car data set. You must use the data set to answer the questions, you should not provide any info that is not in the provided sources. Sources are provided as a Markdown table. Refer to the row where you found your answer inside square brackets."
+        },
+        {"role":"user",
+        "content": "How fast is the Prius V?\n\nSources: vehicle | year | msrp | acceleration | mpg | class\n ---  |  ---  |  ---  |  ---  |  ---  |  --- |\nPrius (1st Gen) | 1997 | 24509.74 | 7.46 | 41.26 | Compact|\nPrius (2nd Gen) | 2000 | 26832.25 | 7.97 | 45.23 | Compact|\nPrius | 2004 | 20355.64 | 9.9 | 46.0 | Midsize|\nPrius (3rd Gen) | 2009 | 24641.18 | 9.6 | 47.98 | Compact|\nPrius alpha (V) | 2011 | 30588.35 | 10.0 | 72.92 | Midsize|\nPrius V | 2011 | 27272.28 | 9.51 | 32.93 | Midsize|\n Prius C | 2012 | 19006.62 | 9.35 | 50.0 | Compact|\n Prius PHV | 2012 | 32095.61 | 8.82 | 50.0 | Midsize|\n Prius C | 2013 | 19080.0 | 8.7 | 50.0 | Compact|\n Prius | 2013 | 24200.0 | 10.2 | 50.0 | Midsize|\n Prius Plug-in | 2013 | 32000.0 | 9.17 | 50.0 | Midsize"
+        }
+        ],
+    "max_tokens": 800,
+    "temperature": 0.7,
+    "frequency_penalty": 0,
+    "presence_penalty": 0,
+    "top_p": 0.95,
+    "stop": null
+}

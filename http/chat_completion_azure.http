@@ -1,0 +1,14 @@
+POST https://{{$dotenv SERVICE}}.openai.azure.com/openai/deployments/{{$dotenv DEPLOYMENT}}/chat/completions?api-version=2024-02-15-preview
+Authorization: Bearer {{$dotenv TOKEN}}
+Content-Type: application/json
+
+{
+    "messages": [{"role":"system","content":"You are an AI assistant that answers questions with short clear answers."},
+                 {"role":"user","content":"How fast is the Prius V?"}],
+    "max_tokens": 800,
+    "temperature": 0.7,
+    "frequency_penalty": 0,
+    "presence_penalty": 0,
+    "top_p": 0.95,
+    "stop": null
+}

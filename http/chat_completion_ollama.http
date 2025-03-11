@@ -1,0 +1,10 @@
+POST http://localhost:11434/v1/chat/completions
+Content-Type: application/json
+
+{
+    "model": "phi3.5:latest",
+    "messages": [{"role":"system","content":"You are an AI assistant that answers questions with short clear answers."},
+                 {"role":"user","content":"How fast is the Prius V?"}],
+    "max_tokens": 800,
+    "temperature": 0.7
+}
