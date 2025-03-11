@@ -35,7 +35,7 @@ else:
     client = openai.OpenAI(api_key=os.environ["OPENAI_KEY"])
     MODEL_NAME = os.environ["OPENAI_MODEL"]
 
-# Index the data from the JSON - each object has id, text, and embedding
+# Indexar los datos del JSON - cada objeto tiene id, texto y embedding
 with open("rag_ingested_chunks.json") as file:
     documents = json.load(file)
     documents_by_id = {doc["id"]: doc for doc in documents}
@@ -44,7 +44,7 @@ index = lunr(ref="id", fields=["text"], documents=documents)
 
 def full_text_search(query, limit):
     """
-    Perform a full-text search on the indexed documents.
+    Realizar una búsqueda de texto completo en los documentos indexados.
     """
     results = index.search(query)
     retrieved_documents = [documents_by_id[result["ref"]] for result in results[:limit]]
@@ -53,8 +53,8 @@ def full_text_search(query, limit):
 
 def vector_search(query, limit):
     """
-    Perform a vector search on the indexed documents
-    using a simple cosine similarity function.
+    Realizar una búsqueda vectorial en los documentos indexados
+    utilizando una función simple de similitud de coseno.
     """
 
     def cosine_similarity(a, b):
@@ -74,7 +74,7 @@ def vector_search(query, limit):
 
 def reciprocal_rank_fusion(text_results, vector_results, alpha=0.5):
     """
-    Perform Reciprocal Rank Fusion on the results from text and vector searches.
+    Realizar la Fusión de Rango Recíproco en los resultados de búsquedas de texto y vectoriales.
     """
     text_ids = {doc["id"] for doc in text_results}
     vector_ids = {doc["id"] for doc in vector_results}
@@ -94,7 +94,7 @@ def reciprocal_rank_fusion(text_results, vector_results, alpha=0.5):
 
 def rerank(query, retrieved_documents):
     """
-    Rerank the results using a cross-encoder model.
+    Reclasificar los resultados utilizando un cross-enconder modelo .
     """
     encoder = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
     scores = encoder.predict([(query, doc["text"]) for doc in retrieved_documents])
@@ -104,7 +104,7 @@ def rerank(query, retrieved_documents):
 
 def hybrid_search(query, limit):
     """
-    Perform a hybrid search using both full-text and vector search.
+    Realizar una búsqueda híbrida utilizando tanto búsqueda de texto completo como vectorial.
     """
     text_results = full_text_search(query, limit * 2)
     vector_results = vector_search(query, limit * 2)
@@ -113,21 +113,21 @@ def hybrid_search(query, limit):
     return combined_results[:limit]
 
 
-# Get the user question
-user_question = "cute gray fuzzsters"
+# Obtener la pregunta del usuario
+user_question = "gris y solitario"
 
-# Search the index for the user question
+# Buscar la pregunta del usuario en el índice
 retrieved_documents = hybrid_search(user_question, limit=5)
-print(f"Retrieved {len(retrieved_documents)} matching documents.")
+print(f"Recuperados {len(retrieved_documents)} documentos coincidentes.")
 context = "\n".join([f"{doc['id']}: {doc['text']}" for doc in retrieved_documents[0:5]])
 
-# Now we can use the matches to generate a response
+# Ahora podemos usar las coincidencias para generar una respuesta
 SYSTEM_MESSAGE = """
-You are a helpful assistant that answers questions about insects.
-You must use the data set to answer the questions,
-you should not provide any info that is not in the provided sources.
-Cite the sources you used to answer the question inside square brackets.
-The sources are in the format: <id>: <text>.
+Eres un asistente útil que responde preguntas sobre insectos.
+Debes utilizar el conjunto de datos para responder las preguntas,
+no debes proporcionar ninguna información que no esté en las fuentes proporcionadas.
+Cita las fuentes que utilizaste para responder la pregunta entre corchetes.
+Las fuentes están en el formato: <id>: <texto>.
 """
 
 response = client.chat.completions.create(
@@ -135,9 +135,9 @@ response = client.chat.completions.create(
     temperature=0.3,
     messages=[
         {"role": "system", "content": SYSTEM_MESSAGE},
-        {"role": "user", "content": f"{user_question}\nSources: {context}"},
+        {"role": "user", "content": f"{user_question}\nFuentes: {context}"},
     ],
 )
 
-print(f"\nResponse from {MODEL_NAME} on {API_HOST}: \n")
+print(f"\nRespuesta de {MODEL_NAME} en {API_HOST}: \n")
 print(response.choices[0].message.content)

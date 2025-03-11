@@ -1,4 +1,4 @@
-import json
+import csv
 import os
 
 import azure.identity
@@ -33,28 +33,32 @@ else:
     client = openai.OpenAI(api_key=os.environ["OPENAI_KEY"])
     MODEL_NAME = os.environ["OPENAI_MODEL"]
 
-# Index the data from the JSON - each object has id, text, and embedding
-with open("rag_ingested_chunks.json") as file:
-    documents = json.load(file)
-    documents_by_id = {doc["id"]: doc for doc in documents}
-index = lunr(ref="id", fields=["text"], documents=documents)
+# Indexamos los datos del CSV
+with open("hybridos.csv") as file:
+    reader = csv.reader(file)
+    rows = list(reader)
+documents = [{"id": (i + 1), "body": " ".join(row)} for i, row in enumerate(rows[1:])]
+index = lunr(ref="id", fields=["body"], documents=documents)
 
-# Get the user question
-user_question = "where do digger bees live?"
+# Obteneemos la pregunta del usuario
+user_question = "¿qué tan rápido es el Prius v?"
 
-# Search the index for the user question
+# Buscaamos en el índice la pregunta del usuario
 results = index.search(user_question)
-retrieved_documents = [documents_by_id[result["ref"]] for result in results]
-print(f"Retrieved {len(retrieved_documents)} matching documents, only sending the first 5.")
-context = "\n".join([f"{doc['id']}: {doc['text']}" for doc in retrieved_documents[0:5]])
+matching_rows = [rows[int(result["ref"])] for result in results]
 
-# Now we can use the matches to generate a response
+# Formateamos como tabla markdown, ya que los llms entienden markdown
+matches_table = " | ".join(rows[0]) + "\n" + " | ".join(" --- " for _ in range(len(rows[0]))) + "\n"
+matches_table += "\n".join(" | ".join(row) for row in matching_rows)
+
+print("Found matches:")
+print(matches_table)
+
+# Ahora podemos usar los resultados para generar una respuesta
 SYSTEM_MESSAGE = """
-You are a helpful assistant that answers questions about insects.
-You must use the data set to answer the questions,
-you should not provide any info that is not in the provided sources.
-Cite the sources you used to answer the question inside square brackets.
-The sources are in the format: <id>: <text>.
+Eres un asistente útil que responde preguntas sobre automóviles basándote en un conjunto de datos de autos híbridos.
+Debes utilizar el conjunto de datos para responder las preguntas, no debes
+proporcionar ninguna información que no esté en las fuentes proporcionadas.
 """
 
 response = client.chat.completions.create(
@@ -62,9 +66,9 @@ response = client.chat.completions.create(
     temperature=0.3,
     messages=[
         {"role": "system", "content": SYSTEM_MESSAGE},
-        {"role": "user", "content": f"{user_question}\nSources: {context}"},
+        {"role": "user", "content": f"{user_question}\nSources: {matches_table}"},
     ],
 )
 
-print(f"\nResponse from {MODEL_NAME} on {API_HOST}: \n")
+print(f"\nResponse from {API_HOST}: \n")
 print(response.choices[0].message.content)
