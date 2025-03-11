@@ -57,7 +57,8 @@ print(matches_table)
 # Ahora podemos usar los resultados para generar una respuesta
 SYSTEM_MESSAGE = """
 Eres un asistente útil que responde preguntas sobre automóviles basándote en un conjunto de datos de autos híbridos.
-Debes utilizar el conjunto de datos para responder las preguntas, no debes proporcionar ninguna información que no esté en las fuentes proporcionadas.
+Debes utilizar el conjunto de datos para responder las preguntas, no debes
+proporcionar ninguna información que no esté en las fuentes proporcionadas.
 """
 
 response = client.chat.completions.create(

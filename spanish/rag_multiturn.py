@@ -53,9 +53,10 @@ def search(query):
     return matches_table
 
 
-SYSTEM_MESSAGE =  """
+SYSTEM_MESSAGE = """
 Eres un asistente útil que responde preguntas sobre automóviles basándote en un conjunto de datos de autos híbridos.
-Debes utilizar el conjunto de datos para responder las preguntas, no debes proporcionar ninguna información que no esté en las fuentes proporcionadas.
+Debes utilizar el conjunto de datos para responder las preguntas, no debes proporcionar ninguna información que no
+esté en las fuentes proporcionadas.
 """
 messages = [{"role": "system", "content": SYSTEM_MESSAGE}]
 

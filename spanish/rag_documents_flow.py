@@ -32,7 +32,7 @@ elif API_HOST == "github":
 else:
     client = openai.OpenAI(api_key=os.environ["OPENAI_KEY"])
     MODEL_NAME = os.environ["OPENAI_MODEL"]
-    
+
 # Indexar los datos del JSON - cada objeto tiene id, texto y embedding
 with open("rag_ingested_chunks.json") as file:
     documents = json.load(file)

@@ -32,7 +32,7 @@ elif API_HOST == "github":
 else:
     client = openai.OpenAI(api_key=os.environ["OPENAI_KEY"])
     MODEL_NAME = os.environ["OPENAI_MODEL"]
-    
+
 # Indexar los datos del CSV
 with open("hybridos.csv") as file:
     reader = csv.reader(file)
@@ -62,7 +62,8 @@ Responde SÓLO con la consulta de keyword sugerida, sin texto adicional.
 
 SYSTEM_MESSAGE = """
 Eres un asistente útil que responde preguntas sobre automóviles basándose en un conjunto de datos de coches híbridos.
-Debes utilizar el conjunto de datos para responder las preguntas, no debes proporcionar información que no esté en las fuentes proporcionadas.
+Debes utilizar el conjunto de datos para responder las preguntas, no debes proporcionar información que no
+esté en las fuentes proporcionadas.
 """
 messages = [{"role": "system", "content": SYSTEM_MESSAGE}]
 
@@ -75,7 +76,10 @@ while True:
         temperature=0.3,
         messages=[
             {"role": "system", "content": QUERY_REWRITE_SYSTEM_MESSAGE},
-            {"role": "user", "content": f"Nueva pregunta del usuario:{question}\n\nHistorial de conversación:{messages}"},
+            {
+                "role": "user",
+                "content": f"Nueva pregunta del usuario:{question}\n\nHistorial de conversación:{messages}",
+            },
         ],
     )
     search_query = response.choices[0].message.content

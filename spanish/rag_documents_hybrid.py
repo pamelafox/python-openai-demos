@@ -41,6 +41,7 @@ with open("rag_ingested_chunks.json") as file:
     documents_by_id = {doc["id"]: doc for doc in documents}
 index = lunr(ref="id", fields=["text"], documents=documents)
 
+
 def full_text_search(query, limit):
     """
     Realizar una búsqueda de texto completo en los documentos indexados.
