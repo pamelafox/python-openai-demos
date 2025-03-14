@@ -1,4 +1,5 @@
 -r requirements.txt
+-r requirements-rag.txt
 pre-commit
 ruff
 black

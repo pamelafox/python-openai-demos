@@ -2,7 +2,10 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.245.0/containers/python-3
 {
     "name": "python-openai-demos (Ollama)",
-    "image": "mcr.microsoft.com/devcontainers/python:3.11-bullseye",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
     "features": {
         "ghcr.io/prulloac/devcontainer-features/ollama:1": {}
     },
@@ -17,15 +20,13 @@
 
             // Add the IDs of extensions you want installed when the container is created.
             "extensions": [
-                "ms-python.python",
-                "charliermarsh.ruff",
-                "ms-python.black-formatter"
+                "ms-python.python"
             ]
         }
     },
 
     // Use 'postCreateCommand' to run commands after the container is created.
-    "postCreateCommand": "pip3 install --user -r requirements-dev.txt && cp .env.sample.ollama .env && ollama pull llama3.1",
+    "postCreateCommand": "cp .env.sample.ollama .env && ollama pull llama3.1",
 
     // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
     "remoteUser": "vscode",
