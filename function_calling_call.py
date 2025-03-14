@@ -68,19 +68,21 @@ response = client.chat.completions.create(
     model=MODEL_NAME,
     messages=[
         {"role": "system", "content": "You are a weather chatbot."},
-        {"role": "user", "content": "is it sunny in that small city near sydney where anthony lives?"},
+        {"role": "user", "content": "is it sunny in berkeley CA?"},
     ],
     tools=tools,
     tool_choice="auto",
 )
 
-print(f"Response from {API_HOST}: \n")
-print(response.choices[0].message.tool_calls[0].function.name)
-print(response.choices[0].message.tool_calls[0].function.arguments)
+print(f"Response from {MODEL_NAME} on {API_HOST}: \n")
 
 # Now actually call the function as indicated
 if response.choices[0].message.tool_calls:
+    print(response.choices[0].message.tool_calls[0].function.name)
+    print(response.choices[0].message.tool_calls[0].function.arguments)
     function_name = response.choices[0].message.tool_calls[0].function.name
     arguments = json.loads(response.choices[0].message.tool_calls[0].function.arguments)
     if function_name == "lookup_weather":
         lookup_weather(**arguments)
+else:
+    print(response.choices[0].message.content)
