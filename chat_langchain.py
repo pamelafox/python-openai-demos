@@ -7,7 +7,7 @@ from langchain_openai import AzureChatOpenAI, ChatOpenAI
 
 # Setup the OpenAI client to use either Azure, OpenAI.com, or Ollama API
 load_dotenv(override=True)
-API_HOST = os.getenv("API_HOST")
+API_HOST = os.getenv("API_HOST", "github")
 
 if API_HOST == "azure":
     token_provider = azure.identity.get_bearer_token_provider(
@@ -27,7 +27,7 @@ elif API_HOST == "ollama":
     )
 elif API_HOST == "github":
     llm = ChatOpenAI(
-        model_name=os.environ["GITHUB_MODEL"],
+        model_name=os.getenv("GITHUB_MODEL", "gpt-4o"),
         openai_api_base="https://models.inference.ai.azure.com",
         openai_api_key=os.environ["GITHUB_TOKEN"],
     )

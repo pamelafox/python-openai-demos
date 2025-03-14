@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 # Setup the OpenAI client to use either Azure, OpenAI.com, or Ollama API
 load_dotenv(override=True)
-API_HOST = os.getenv("API_HOST")
+API_HOST = os.getenv("API_HOST", "github")
 
 if API_HOST == "azure":
     token_provider = azure.identity.get_bearer_token_provider(
@@ -26,7 +26,7 @@ elif API_HOST == "ollama":
 
 elif API_HOST == "github":
     client = openai.OpenAI(base_url="https://models.inference.ai.azure.com", api_key=os.environ["GITHUB_TOKEN"])
-    MODEL_NAME = os.environ["GITHUB_MODEL"]
+    MODEL_NAME = os.getenv("GITHUB_MODEL", "gpt-4o")
 
 else:
     client = openai.OpenAI(api_key=os.environ["OPENAI_KEY"])
@@ -68,19 +68,21 @@ response = client.chat.completions.create(
     model=MODEL_NAME,
     messages=[
         {"role": "system", "content": "You are a weather chatbot."},
-        {"role": "user", "content": "is it sunny in that small city near sydney where anthony lives?"},
+        {"role": "user", "content": "is it sunny in berkeley CA?"},
     ],
     tools=tools,
     tool_choice="auto",
 )
 
-print(f"Response from {API_HOST}: \n")
-print(response.choices[0].message.tool_calls[0].function.name)
-print(response.choices[0].message.tool_calls[0].function.arguments)
+print(f"Response from {MODEL_NAME} on {API_HOST}: \n")
 
 # Now actually call the function as indicated
 if response.choices[0].message.tool_calls:
+    print(response.choices[0].message.tool_calls[0].function.name)
+    print(response.choices[0].message.tool_calls[0].function.arguments)
     function_name = response.choices[0].message.tool_calls[0].function.name
     arguments = json.loads(response.choices[0].message.tool_calls[0].function.arguments)
     if function_name == "lookup_weather":
         lookup_weather(**arguments)
+else:
+    print(response.choices[0].message.content)
