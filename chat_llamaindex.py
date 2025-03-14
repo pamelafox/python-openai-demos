@@ -9,7 +9,7 @@ from llama_index.llms.openai_like import OpenAILike
 
 # Setup the OpenAI client to use either Azure, OpenAI.com, or Ollama API
 load_dotenv(override=True)
-API_HOST = os.getenv("API_HOST")
+API_HOST = os.getenv("API_HOST", "github")
 
 if API_HOST == "azure":
     token_provider = azure.identity.get_bearer_token_provider(
@@ -27,15 +27,15 @@ elif API_HOST == "ollama":
     llm = OpenAILike(
         model=os.environ["OLLAMA_MODEL"], api_base=os.environ["OLLAMA_ENDPOINT"], api_key="fake", is_chat_model=True
     )
-elif API_HOST == "github":
+elif API_HOST == "openai":
+    llm = OpenAI(model=os.environ["OPENAI_MODEL"], api_key=os.environ["OPENAI_KEY"])
+else:
     llm = OpenAILike(
-        model=os.environ["GITHUB_MODEL"],
+        model=os.getenv("GITHUB_MODEL", "gpt-4o"),
         api_base="https://models.inference.ai.azure.com",
         api_key=os.environ["GITHUB_TOKEN"],
         is_chat_model=True,
     )
-else:
-    llm = OpenAI(model=os.environ["OPENAI_MODEL"], api_key=os.environ["OPENAI_KEY"])
 
 chat_msgs = [
     ChatMessage(
