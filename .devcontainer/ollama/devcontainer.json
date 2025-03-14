@@ -3,8 +3,8 @@
 {
     "name": "python-openai-demos (Ollama)",
     "build": {
-        "dockerfile": "Dockerfile",
-        "context": ".."
+        "dockerfile": "../Dockerfile",
+        "context": "../.."
     },
     "features": {
         "ghcr.io/prulloac/devcontainer-features/ollama:1": {}

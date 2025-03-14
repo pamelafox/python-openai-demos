@@ -3,8 +3,8 @@
 {
     "name": "python-openai-demos (OpenAI.com)",
     "build": {
-        "dockerfile": "Dockerfile",
-        "context": ".."
+        "dockerfile": "../Dockerfile",
+        "context": "../.."
     },
     // Configure tool-specific properties.
     "customizations": {
