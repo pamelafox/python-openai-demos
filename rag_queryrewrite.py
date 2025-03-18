@@ -72,7 +72,7 @@ while True:
     # Rewrite the query to fix typos and incorporate past context
     response = client.chat.completions.create(
         model=MODEL_NAME,
-        temperature=0.3,
+        temperature=0.05,
         messages=[
             {"role": "system", "content": QUERY_REWRITE_SYSTEM_MESSAGE},
             {"role": "user", "content": f"New user question:{question}\n\nConversation history:{messages}"},

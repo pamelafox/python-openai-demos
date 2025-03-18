@@ -73,7 +73,7 @@ while True:
     # Reescribir la consulta para corregir errores tipográficos e incorporar contexto pasado
     response = client.chat.completions.create(
         model=MODEL_NAME,
-        temperature=0.3,
+        temperature=0.05,
         messages=[
             {"role": "system", "content": QUERY_REWRITE_SYSTEM_MESSAGE},
             {
