@@ -35,15 +35,16 @@ else:
 
 
 class GetDeliveryDate(BaseModel):
-  order_id: str
+    order_id: str
+
 
 response = client.chat.completions.create(
-   model=MODEL_NAME,
-   messages=[
-     {"role": "system",
-      "content": "You're a customer support bot. Use the tools to assist the user."},
-     {"role": "user",
-      "content": "Hi, can you tell me the delivery date for my order #12345?"}],
-   tools=[openai.pydantic_function_tool(GetDeliveryDate)])
+    model=MODEL_NAME,
+    messages=[
+        {"role": "system", "content": "You're a customer support bot. Use the tools to assist the user."},
+        {"role": "user", "content": "Hi, can you tell me the delivery date for my order #12345?"},
+    ],
+    tools=[openai.pydantic_function_tool(GetDeliveryDate)],
+)
 
 rich.print(response.choices[0].message.tool_calls[0].function)

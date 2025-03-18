@@ -34,7 +34,6 @@ else:
     MODEL_NAME = os.environ["OPENAI_MODEL"]
 
 
-
 class CalendarEvent(BaseModel):
     name: str
     date: str
@@ -52,7 +51,7 @@ completion = client.beta.chat.completions.parse(
 
 
 message = completion.choices[0].message
-if (message.refusal):
+if message.refusal:
     rich.print(message.refusal)
 else:
     event = message.parsed

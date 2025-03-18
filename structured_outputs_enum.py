@@ -35,20 +35,21 @@ else:
     MODEL_NAME = os.environ["OPENAI_MODEL"]
 
 
-
 class DayOfWeek(str, Enum):
-  SUNDAY = "Sunday"
-  MONDAY = "Monday"
-  TUESDAY = "Tuesday"
-  WEDNESDAY = "Wednesday"
-  THURSDAY = "Thursday"
-  FRIDAY = "Friday"
-  SATURDAY = "Saturday"
+    SUNDAY = "Sunday"
+    MONDAY = "Monday"
+    TUESDAY = "Tuesday"
+    WEDNESDAY = "Wednesday"
+    THURSDAY = "Thursday"
+    FRIDAY = "Friday"
+    SATURDAY = "Saturday"
+
 
 class CalendarEvent(BaseModel):
-  name: str
-  date: DayOfWeek
-  participants: list[str]
+    name: str
+    date: DayOfWeek
+    participants: list[str]
+
 
 completion = client.beta.chat.completions.parse(
     model=MODEL_NAME,
@@ -61,7 +62,7 @@ completion = client.beta.chat.completions.parse(
 
 
 message = completion.choices[0].message
-if (message.refusal):
+if message.refusal:
     rich.print(message.refusal)
 else:
     event = message.parsed

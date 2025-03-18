@@ -34,7 +34,6 @@ else:
     MODEL_NAME = os.environ["OPENAI_MODEL"]
 
 
-
 class CalendarEvent(BaseModel):
     name: str
     date: str = Field(..., description="A date in the format YYYY-MM-DD")
@@ -44,15 +43,18 @@ class CalendarEvent(BaseModel):
 completion = client.beta.chat.completions.parse(
     model=MODEL_NAME,
     messages=[
-        {"role": "system", "content": "Extract the event information. If no year is specified, assume the current year (2025)."},
+        {
+            "role": "system",
+            "content": "Extract the event information. If no year is specified, assume the current year (2025).",
+        },
         {"role": "user", "content": "Alice and Bob are going to a science fair on the 1st of april."},
     ],
     response_format=CalendarEvent,
 )
-CalendarEvent(name='Science Fair', date='2025-04-01', participants=['Alice', 'Bob'])
+CalendarEvent(name="Science Fair", date="2025-04-01", participants=["Alice", "Bob"])
 
 message = completion.choices[0].message
-if (message.refusal):
+if message.refusal:
     rich.print(message.refusal)
 else:
     event = message.parsed
