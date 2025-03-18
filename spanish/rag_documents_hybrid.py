@@ -1,4 +1,3 @@
-# pip install sentence-transformers
 import json
 import os
 
@@ -72,24 +71,25 @@ def vector_search(query, limit):
     return retrieved_documents
 
 
-def reciprocal_rank_fusion(text_results, vector_results, alpha=0.5):
+def reciprocal_rank_fusion(text_results, vector_results, k=60):
     """
-    Realizar la Fusión de Rango Recíproco en los resultados de búsquedas de texto y vectoriales.
+    Realizar la Fusión de Rango Recíproco (RRF) en los resultados de búsquedas de texto y vectoriales,
+    basado en el algoritmo descrito aqui:
+    https://learn.microsoft.com/azure/search/hybrid-search-ranking#how-rrf-ranking-works
     """
-    text_ids = {doc["id"] for doc in text_results}
-    vector_ids = {doc["id"] for doc in vector_results}
+    scores = {}
 
-    combined_results = []
-    for doc in text_results:
-        if doc["id"] in vector_ids:
-            combined_results.append((doc, alpha))
-        else:
-            combined_results.append((doc, 1 - alpha))
-    for doc in vector_results:
-        if doc["id"] not in text_ids:
-            combined_results.append((doc, alpha))
-    combined_results.sort(key=lambda x: x[1], reverse=True)
-    return [doc for doc, _ in combined_results]
+    for i, doc in enumerate(text_results):
+        if doc["id"] not in scores:
+            scores[doc["id"]] = 0
+        scores[doc["id"]] += 1 / (i + k)
+    for i, doc in enumerate(vector_results):
+        if doc["id"] not in scores:
+            scores[doc["id"]] = 0
+        scores[doc["id"]] += 1 / (i + k)
+    scored_documents = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+    retrieved_documents = [documents_by_id[doc_id] for doc_id, _ in scored_documents]
+    return retrieved_documents
 
 
 def rerank(query, retrieved_documents):
@@ -108,13 +108,13 @@ def hybrid_search(query, limit):
     """
     text_results = full_text_search(query, limit * 2)
     vector_results = vector_search(query, limit * 2)
-    combined_results = reciprocal_rank_fusion(text_results, vector_results)
-    combined_results = rerank(query, combined_results)
-    return combined_results[:limit]
+    fused_results = reciprocal_rank_fusion(text_results, vector_results)
+    reranked_results = rerank(query, fused_results)
+    return reranked_results[:limit]
 
 
 # Obtener la pregunta del usuario
-user_question = "gris y solitario"
+user_question = "cual insecta es gris y velloso?"
 
 # Buscar la pregunta del usuario en el índice
 retrieved_documents = hybrid_search(user_question, limit=5)
