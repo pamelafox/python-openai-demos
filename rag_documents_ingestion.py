@@ -44,7 +44,7 @@ for filename in filenames:
 
     # Split the text into smaller chunks
     text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-        model_name="gpt-4o", chunk_size=500, chunk_overlap=0
+        model_name="gpt-4o", chunk_size=500, chunk_overlap=125
     )
     texts = text_splitter.create_documents([md_text])
     file_chunks = [{"id": f"{filename}-{(i + 1)}", "text": text.page_content} for i, text in enumerate(texts)]
