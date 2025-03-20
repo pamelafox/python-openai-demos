@@ -44,6 +44,16 @@ Then run the scripts (in order of increasing complexity):
 * [`rag_documents_flow.py`](./rag_pdfs.py): A RAG flow that retrieves matching results from the local JSON file created by `rag_documents_ingestion.py`.
 * [`rag_documents_hybrid.py`](./rag_documents_hybrid.py): A RAG flow that implements a hybrid retrieval with both vector and keyword search, merging with Reciprocal Rank Fusion (RRF), and semantic re-ranking with a cross-encoder model.
 
+## Structured outputs with OpenAI
+
+These scripts demonstrate how to use the OpenAI API to generate structured responses using Pydantic data models:
+
+* [`structured_outputs_basic.py`](./structured_outputs_basic.py): Basic example extracting simple event information using a Pydantic model.
+* [`structured_outputs_description.py`](./structured_outputs_description.py): Uses additional descriptions in Pydantic model fields to clarify to the model how to format the response.
+* [`structured_outputs_enum.py`](./structured_outputs_enum.py): Uses enumerations (Enums) to restrict possible values in structured responses.
+* [`structured_outputs_function_calling.py`](./structured_outputs_function_calling.py): Demonstrates how to use functions defined with Pydantic for automatic function calling based on user queries.
+* [`structured_outputs_nested.py`](./structured_outputs_nested.py): Uses nested Pydantic models to handle more complex structured responses, such as events with participants having multiple attributes.
+
 ## Setting up the environment
 
 If you open this up in a Dev Container or GitHub Codespaces, everything will be setup for you.
