@@ -49,7 +49,10 @@ completion = client.beta.chat.completions.parse(
     model=MODEL_NAME,
     messages=[
         {"role": "system", "content": "Extrae la info del evento."},
-        {"role": "user", "content": "Alice, que es carpintera, y Bob, que es plomero, van a ir a una feria de ciencias el viernes."},
+        {
+            "role": "user",
+            "content": "Alice, que es carpintera, y Bob, que es plomero, van a ir a una feria de ciencias el viernes.",
+        },
     ],
     response_format=CalendarEvent,
 )

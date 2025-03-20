@@ -41,7 +41,10 @@ class GetDeliveryDate(BaseModel):
 response = client.chat.completions.create(
     model=MODEL_NAME,
     messages=[
-        {"role": "system", "content": "Eres un bot de atención al cliente. Usá las herramientas para ayudar al usuario."},
+        {
+            "role": "system",
+            "content": "Eres un bot de atención al cliente. Usá las herramientas para ayudar al usuario.",
+        },
         {"role": "user", "content": "Hola, ¿me puedes decir cuándo llegará mi pedido #12345?"},
     ],
     tools=[openai.pydantic_function_tool(GetDeliveryDate)],
