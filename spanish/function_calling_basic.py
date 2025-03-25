@@ -69,6 +69,11 @@ response = client.chat.completions.create(
     tools=tools,
 )
 
-print(f"Respuesta de {API_HOST}: \n")
-print(response.choices[0].message.tool_calls[0].function.name)
-print(response.choices[0].message.tool_calls[0].function.arguments)
+print(f"Respuesta de {MODEL_NAME} en {API_HOST}: \n")
+
+if response.choices[0].message.tool_calls:
+    tool_call = response.choices[0].message.tool_calls[0]
+    print(tool_call.function.name)
+    print(tool_call.function.arguments)
+else:
+    print(response.choices[0].message.content)
