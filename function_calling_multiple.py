@@ -91,7 +91,7 @@ response = client.chat.completions.create(
     tool_choice="auto",
 )
 
-print(f"Response from {API_HOST}: \n")
+print(f"Response from {MODEL_NAME} on {API_HOST}: \n")
 for message in response.choices[0].message.tool_calls:
     print(message.function.name)
     print(message.function.arguments)
