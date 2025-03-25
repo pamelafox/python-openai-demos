@@ -74,13 +74,11 @@ response = client.chat.completions.create(
     tool_choice="auto",
 )
 
-print(f"Respuesta de {API_HOST}: \n")
-print(response.choices[0].message.tool_calls[0].function.name)
-print(response.choices[0].message.tool_calls[0].function.arguments)
-
+print(f"Respuesta de {MODEL_NAME} en {API_HOST}: \n")
 
 if response.choices[0].message.tool_calls:
-    function_name = response.choices[0].message.tool_calls[0].function.name
-    arguments = json.loads(response.choices[0].message.tool_calls[0].function.arguments)
+    tool_call = response.choices[0].message.tool_calls[0]
+    function_name = tool_call.function.name
+    arguments = json.loads(tool_call.function.arguments)
     if function_name == "lookup_weather":
         lookup_weather(**arguments)
