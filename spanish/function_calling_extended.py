@@ -34,11 +34,11 @@ else:
 
 
 def lookup_weather(city_name=None, zip_code=None):
-    """Lookup the weather for a given city name or zip code."""
+    """Buscar el clima para un nombre de ciudad o código postal dado."""
     return {
         "city_name": city_name,
         "zip_code": zip_code,
-        "weather": "sunny",
+        "weather": "soleado",
         "temperature": 75,
     }
 
