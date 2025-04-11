@@ -124,3 +124,7 @@ depending on the environment variables you set.
 
     ```shell
     export GITHUB_TOKEN="<your-github-token-goes-here>"
+
+## Resources
+
+* [Video series: Learn Python + AI](https://techcommunity.microsoft.com/blog/EducatorDeveloperBlog/learn-python--ai-from-our-video-series/4400393)
