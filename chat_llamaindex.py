@@ -30,7 +30,7 @@ elif API_HOST == "ollama":
 elif API_HOST == "github":
     llm = OpenAILike(
         model=os.getenv("GITHUB_MODEL", "gpt-4o"),
-        api_base="https://models.inference.ai.azure.com",
+        api_base="https://models.github.ai",
         api_key=os.environ["GITHUB_TOKEN"],
         is_chat_model=True,
     )

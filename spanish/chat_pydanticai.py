@@ -26,7 +26,7 @@ elif API_HOST == "github":
     model = OpenAIModel(
         os.getenv("GITHUB_MODEL", "gpt-4o"),
         api_key=os.environ["GITHUB_TOKEN"],
-        base_url="https://models.inference.ai.azure.com",
+        base_url="https://models.github.ai",
     )
 
 else:
