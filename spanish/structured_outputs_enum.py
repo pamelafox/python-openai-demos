@@ -27,8 +27,8 @@ elif API_HOST == "ollama":
     MODEL_NAME = os.environ["OLLAMA_MODEL"]
 
 elif API_HOST == "github":
-    client = openai.OpenAI(base_url="https://models.inference.ai.azure.com", api_key=os.environ["GITHUB_TOKEN"])
-    MODEL_NAME = os.getenv("GITHUB_MODEL", "gpt-4o")
+    client = openai.OpenAI(base_url="https://models.github.ai/inference", api_key=os.environ["GITHUB_TOKEN"])
+    MODEL_NAME = os.getenv("GITHUB_MODEL", "openai/gpt-4o")
 
 else:
     client = openai.OpenAI(api_key=os.environ["OPENAI_KEY"])

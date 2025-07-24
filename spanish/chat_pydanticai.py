@@ -24,9 +24,9 @@ elif API_HOST == "ollama":
     model = OpenAIModel(os.environ["OLLAMA_MODEL"], api_key="fake", base_url=os.environ["OLLAMA_ENDPOINT"])
 elif API_HOST == "github":
     model = OpenAIModel(
-        os.getenv("GITHUB_MODEL", "gpt-4o"),
+        os.getenv("GITHUB_MODEL", "openai/gpt-4o"),
         api_key=os.environ["GITHUB_TOKEN"],
-        base_url="https://models.inference.ai.azure.com",
+        base_url="https://models.github.ai/inference",
     )
 
 else:
