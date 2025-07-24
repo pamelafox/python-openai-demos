@@ -2,9 +2,10 @@ import os
 
 import azure.identity
 from dotenv import load_dotenv
-from openai import AsyncAzureOpenAI
+from openai import AsyncAzureOpenAI, AsyncOpenAI
 from pydantic_ai import Agent
 from pydantic_ai.models.openai import OpenAIModel
+from pydantic_ai.providers.openai import OpenAIProvider
 
 # Setup the OpenAI client to use either Azure, OpenAI.com, or Ollama API
 load_dotenv(override=True)
@@ -21,16 +22,14 @@ if API_HOST == "azure":
     )
     model = OpenAIModel(os.environ["AZURE_OPENAI_DEPLOYMENT"], openai_client=client)
 elif API_HOST == "ollama":
-    model = OpenAIModel(os.environ["OLLAMA_MODEL"], api_key="fake", base_url=os.environ["OLLAMA_ENDPOINT"])
+    client = AsyncOpenAI(base_url=os.environ["OLLAMA_ENDPOINT"], api_key="fake")
+    model = OpenAIModel(os.environ["OLLAMA_MODEL"], provider=OpenAIProvider(openai_client=client))
 elif API_HOST == "github":
-    model = OpenAIModel(
-        os.getenv("GITHUB_MODEL", "openai/gpt-4o"),
-        api_key=os.environ["GITHUB_TOKEN"],
-        base_url="https://models.github.ai/inference",
-    )
-
+    client = AsyncOpenAI(api_key=os.environ["GITHUB_TOKEN"], base_url="https://models.github.ai/inference")
+    model = OpenAIModel(os.getenv("GITHUB_MODEL", "openai/gpt-4o"), provider=OpenAIProvider(openai_client=client))
 else:
-    model = OpenAIModel(os.environ["OPENAI_MODEL"], api_key=os.environ["OPENAI_KEY"])
+    client = AsyncOpenAI(api_key=os.environ["OPENAI_KEY"])
+    model = OpenAIModel(os.environ["OPENAI_MODEL"], provider=OpenAIProvider(openai_client=client))
 
 
 agent = Agent(model, system_prompt="You are a helpful assistant that makes lots of cat references and uses emojis.")
