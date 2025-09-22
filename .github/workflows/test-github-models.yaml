@@ -1,0 +1,48 @@
+name: Run example files with GitHub models
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'requirements.txt'
+      - '.github/workflows/test-github-models.yaml'
+      - 'chat.py'
+      - 'spanish/chat.py'
+
+jobs:
+  test-github-models:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      models: read
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install dependencies
+        run: |
+          uv venv .venv
+          uv pip install -r requirements.txt
+
+      - name: Test chat files with GitHub Models
+        env:
+          API_HOST: github
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_MODEL: openai/gpt-4o-mini
+        run: |
+          source .venv/bin/activate
+          files=("chat.py" "spanish/chat.py")
+          for file in "${files[@]}"; do
+            echo "Testing $file..."
+            python "$file" || exit 1
+          done
