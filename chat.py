@@ -12,9 +12,10 @@ if API_HOST == "azure":
     token_provider = azure.identity.get_bearer_token_provider(
         azure.identity.DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
     )
-    client = openai.OpenAI(
-        base_url=os.environ["AZURE_OPENAI_ENDPOINT"],
-        api_key=token_provider,
+    client = openai.AzureOpenAI(
+        api_version=os.environ["AZURE_OPENAI_VERSION"],
+        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
+        azure_ad_token_provider=token_provider,
     )
     MODEL_NAME = os.environ["AZURE_OPENAI_DEPLOYMENT"]
 
