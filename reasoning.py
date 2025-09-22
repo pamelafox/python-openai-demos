@@ -37,11 +37,19 @@ response = client.chat.completions.create(
     messages=[
         {
             "role": "user",
-            "content": "Multiply together 1897234 and 12903812039.",
+            "content": "How many r's are in strawberry? Answer in a complete sentence with explanation.",
         },
     ],
-    reasoning_effort="minimal",
-    verbosity="low",
+    reasoning_effort="low",
 )
+
+# Reasoning contnet is only available for gpt-oss models running on Ollama
+# To see reasoning traces with gpt-5 family, use the Responses API
+if hasattr(response.choices[0].message, "reasoning"):
+    print("🤔 Thinking...")
+    print(response.choices[0].message.reasoning)
+    print("🛑 Done thinking.")
+print("Response:")
 print(response.choices[0].message.content)
+print("Usage:")
 print(response.usage)
