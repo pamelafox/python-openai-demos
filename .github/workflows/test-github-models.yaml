@@ -8,6 +8,7 @@ on:
     # Also run when chat.py files are modified
     paths:
       - 'chat.py'
+      - 'reasoning.py'
       - 'spanish/chat.py'
       - 'requirements.txt'
       - '.github/workflows/test-github-models.yaml'
