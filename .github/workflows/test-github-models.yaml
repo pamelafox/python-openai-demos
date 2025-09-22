@@ -1,4 +1,4 @@
-name: Test example files are working with GitHub models
+name: Run example files with GitHub models
 
 on:
   push:
@@ -11,15 +11,12 @@ on:
       - 'chat.py'
       - 'spanish/chat.py'
 
-permissions:
-  models: read
-  contents: read
-
 jobs:
   test-github-models:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      models: read
 
     steps:
       - uses: actions/checkout@v5
