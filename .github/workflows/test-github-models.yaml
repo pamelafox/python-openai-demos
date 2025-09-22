@@ -36,7 +36,7 @@ jobs:
         env:
           API_HOST: github
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_MODEL: gpt-4o-mini
+          GITHUB_MODEL: openai/gpt-4o-mini
         run: |
           echo "Testing main chat.py file..."
           python chat.py
@@ -45,7 +45,7 @@ jobs:
         env:
           API_HOST: github
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_MODEL: gpt-4o-mini
+          GITHUB_MODEL: openai/gpt-4o-mini
         run: |
           echo "Testing Spanish chat.py file..."
           python spanish/chat.py
