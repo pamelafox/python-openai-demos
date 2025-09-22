@@ -17,11 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    strategy:
-      matrix:
-        python_file:
-          - "chat.py"
-          - "spanish/chat.py"
 
     steps:
       - uses: actions/checkout@v5
@@ -38,10 +33,14 @@ jobs:
         run: |
           uv pip install -r requirements.txt
 
-      - name: Test ${{ matrix.python_file }} with GitHub Models
+      - name: Test chat files with GitHub Models
         env:
           API_HOST: github
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_MODEL: openai/gpt-4o-mini
         run: |
-          python ${{ matrix.python_file }}
+          files=("chat.py" "spanish/chat.py")
+          for file in "${files[@]}"; do
+            echo "Testing $file..."
+            python "$file" || exit 1
+          done
