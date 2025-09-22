@@ -44,5 +44,5 @@ jobs:
           files=("chat.py" "spanish/chat.py")
           for file in "${files[@]}"; do
             echo "Testing $file..."
-            uv python "$file" || exit 1
+            python "$file" || exit 1
           done
