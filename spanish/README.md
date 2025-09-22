@@ -16,14 +16,6 @@ Además de estos scripts para demostrar características adicionales:
 * [`chat_safety.py`](./chat_safety.py): El script simple con manejo de excepciones para errores de filtro de Seguridad de Contenido de Azure AI.
 * [`chat_async.py`](./chat_async.py): Utiliza los clientes asíncronos para hacer llamadas asincrónicas, incluyendo un ejemplo de envío de múltiples solicitudes a la vez usando `asyncio.gather`.
 
-## Popular LLM libraries
-
-Estos scripts usan librerías populares para LLMs y demuestran como usarlas con la API de OpenAI:
-
-* [`chat_langchain.py`](./chat_langchain.py): Utiliza el SDK de langchain para generar completados de chat. [Aprende más en la documentación de Langchain](https://python.langchain.com/docs/get_started/quickstart)
-* [`chat_llamaindex.py`](./chat_llamaindex.py): Utiliza el SDK de LlamaIndex para generar completados de chat. [Aprende más en la documentación de LlamaIndex](https://docs.llamaindex.ai/en/stable/)
-* [`chat_pydanticai.py`](./chat_pydanticai.py): Utiliza el SDK de PydanticAI para general completados de chat. [Aprende más en la documentación de PydanticAI](https://ai.pydantic.dev/)
-
 ## Generación Aumentada con Recuperación (RAG)
 
 Estos scripts demuestran cómo usar la API de OpenAI para tareas de Generación Aumentada con Recuperación (RAG), donde el modelo recupera información relevante de una fuente y la utiliza para generar una respuesta.
@@ -82,8 +74,8 @@ Estos scripts pueden ejecutarse con una cuenta de Azure OpenAI, OpenAI.com, serv
 
     ```bash
     API_HOST=azure
-    AZURE_OPENAI_ENDPOINT=https://YOUR-AZURE-OPENAI-SERVICE-NAME.openai.azure.com
-    AZURE_OPENAI_DEPLOYMENT=YOUR-AZURE-DEPLOYMENT-NAME
+    AZURE_OPENAI_ENDPOINT=https://YOUR-AZURE-OPENAI-SERVICE-NAME.openai.azure.com/openai/v1
+    AZURE_OPENAI_CHAT_DEPLOYMENT=YOUR-AZURE-DEPLOYMENT-NAME
     AZURE_OPENAI_VERSION=2024-03-01-preview
     ```
 
