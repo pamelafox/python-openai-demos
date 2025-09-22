@@ -37,8 +37,6 @@ jobs:
       - name: Install dependencies
         run: |
           uv pip install -r requirements.txt
-        env:
-          UV_SYSTEM_PYTHON: 1
 
       - name: Test ${{ matrix.python_file }} with GitHub Models
         env:
