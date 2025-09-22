@@ -5,12 +5,14 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-    # Also run when chat.py files are modified
     paths:
-      - 'chat.py'
-      - 'spanish/chat.py'
       - 'requirements.txt'
       - '.github/workflows/test-github-models.yaml'
+      - 'chat.py'
+      - 'spanish/chat.py'
+
+permissions:
+  models: read
 
 jobs:
   test-github-models:
