@@ -1,4 +1,4 @@
-name: Python checks
+name: Check example files are linted and formatted
 
 on:
   push:
