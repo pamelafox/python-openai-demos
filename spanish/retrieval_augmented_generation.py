@@ -1,5 +1,6 @@
 import csv
 import os
+from pathlib import Path
 
 import azure.identity
 import openai
@@ -35,7 +36,8 @@ else:
 USER_MESSAGE = "¿qué tan rápido es el Prius v?"
 
 # Abrir el CSV y almacenar en una lista
-with open("hybridos.csv") as file:
+CSV_PATH = Path(__file__).with_name("hybridos.csv")
+with CSV_PATH.open(newline="", encoding="utf-8") as file:
     reader = csv.reader(file)
     rows = list(reader)
 

@@ -1,5 +1,6 @@
 import csv
 import os
+from pathlib import Path
 
 import azure.identity
 import openai
@@ -33,7 +34,8 @@ else:
     MODEL_NAME = os.environ["OPENAI_MODEL"]
 
 # Indexamos los datos del CSV
-with open("hybridos.csv") as file:
+CSV_PATH = Path(__file__).with_name("hybridos.csv")
+with CSV_PATH.open(newline="", encoding="utf-8") as file:
     reader = csv.reader(file)
     rows = list(reader)
 documents = [{"id": (i + 1), "body": " ".join(row)} for i, row in enumerate(rows[1:])]
