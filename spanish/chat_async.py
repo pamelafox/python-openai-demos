@@ -1,24 +1,25 @@
 import asyncio
 import os
 
-import azure.identity
+import azure.identity.aio
 import openai
 from dotenv import load_dotenv
 
-# Setup the OpenAI client to use either Azure, OpenAI.com, or Ollama API
+# Configura el cliente de OpenAI para usar la API de Azure, OpenAI.com u Ollama
 load_dotenv(override=True)
 API_HOST = os.getenv("API_HOST", "github")
 
+azure_credential = None  # Guarda la Azure Credential para poder cerrarla correctamente
 if API_HOST == "azure":
-    token_provider = azure.identity.get_bearer_token_provider(
-        azure.identity.DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
+    azure_credential = azure.identity.aio.DefaultAzureCredential()
+    token_provider = azure.identity.aio.get_bearer_token_provider(
+        azure_credential, "https://cognitiveservices.azure.com/.default"
     )
-    client = openai.AsyncAzureOpenAI(
-        api_version=os.environ["AZURE_OPENAI_VERSION"],
-        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-        azure_ad_token_provider=token_provider,
+    client = openai.AsyncOpenAI(
+        base_url=os.environ["AZURE_OPENAI_ENDPOINT"],
+        api_key=token_provider,
     )
-    MODEL_NAME = os.environ["AZURE_OPENAI_DEPLOYMENT"]
+    MODEL_NAME = os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"]
 elif API_HOST == "ollama":
     client = openai.AsyncOpenAI(base_url=os.environ["OLLAMA_ENDPOINT"], api_key="nokeyneeded")
     MODEL_NAME = os.environ["OLLAMA_MODEL"]
@@ -54,11 +55,13 @@ async def generate_response(location):
     return response.choices[0].message.content
 
 
-async def single():
+async def single() -> None:
+    """Ejecuta un único ejemplo."""
     print(await generate_response("Tokio"))
 
 
-async def multiple():
+async def multiple() -> None:
+    """Ejecuta varias solicitudes concurrentes."""
     answers = await asyncio.gather(
         generate_response("Tokio"),
         generate_response("Berkeley"),
@@ -68,4 +71,20 @@ async def multiple():
         print(answer, "\n")
 
 
-asyncio.run(single())
+async def close_clients() -> None:
+    """Cierra el cliente OpenAI y la credencial de Azure (si existe)."""
+    await client.close()
+    if azure_credential is not None:
+        await azure_credential.close()
+
+
+async def main():
+    """Punto de entrada que garantiza la liberación de recursos."""
+    try:
+        await single()  # Usa await multiple() si quieres ejecutar de forma concurrente.
+    finally:
+        await close_clients()
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

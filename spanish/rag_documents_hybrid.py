@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from lunr import lunr
 from sentence_transformers import CrossEncoder
 
-# Setup the OpenAI client to use either Azure, OpenAI.com, or Ollama API
+# Configura el cliente de OpenAI para usar la API de Azure, OpenAI.com u Ollama
 load_dotenv(override=True)
 API_HOST = os.getenv("API_HOST", "github")
 
@@ -15,12 +15,11 @@ if API_HOST == "azure":
     token_provider = azure.identity.get_bearer_token_provider(
         azure.identity.DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
     )
-    client = openai.AzureOpenAI(
-        api_version=os.environ["AZURE_OPENAI_VERSION"],
-        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-        azure_ad_token_provider=token_provider,
+    client = openai.OpenAI(
+        base_url=os.environ["AZURE_OPENAI_ENDPOINT"],
+        api_key=token_provider,
     )
-    MODEL_NAME = os.environ["AZURE_OPENAI_DEPLOYMENT"]
+    MODEL_NAME = os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"]
 
 elif API_HOST == "ollama":
     client = openai.OpenAI(base_url=os.environ["OLLAMA_ENDPOINT"], api_key="nokeyneeded")
@@ -114,7 +113,7 @@ def hybrid_search(query, limit):
 
 
 # Obtener la pregunta del usuario
-user_question = "cual insecta es gris y velloso?"
+user_question = "como se llama el insecto que de color gris y es peludito?"
 
 # Buscar la pregunta del usuario en el índice
 retrieved_documents = hybrid_search(user_question, limit=5)

@@ -5,7 +5,7 @@ import azure.identity
 import openai
 from dotenv import load_dotenv
 
-# Setup the OpenAI client to use either Azure, OpenAI.com, or Ollama API
+# Configura el cliente de OpenAI para usar la API de Azure, OpenAI.com u Ollama
 load_dotenv(override=True)
 API_HOST = os.getenv("API_HOST", "github")
 
@@ -13,12 +13,11 @@ if API_HOST == "azure":
     token_provider = azure.identity.get_bearer_token_provider(
         azure.identity.DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
     )
-    client = openai.AzureOpenAI(
-        api_version=os.environ["AZURE_OPENAI_VERSION"],
-        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-        azure_ad_token_provider=token_provider,
+    client = openai.OpenAI(
+        base_url=os.environ["AZURE_OPENAI_ENDPOINT"],
+        api_key=token_provider,
     )
-    MODEL_NAME = os.environ["AZURE_OPENAI_DEPLOYMENT"]
+    MODEL_NAME = os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"]
 
 elif API_HOST == "ollama":
     client = openai.OpenAI(base_url=os.environ["OLLAMA_ENDPOINT"], api_key="nokeyneeded")
@@ -34,7 +33,7 @@ else:
 
 
 def lookup_weather(city_name=None, zip_code=None):
-    """Buscar el clima para un nombre de ciudad o código postal dado."""
+    """Busca el clima según nombre de ciudad o código postal."""
     return {
         "city_name": city_name,
         "zip_code": zip_code,
@@ -69,8 +68,8 @@ tools = [
 ]
 
 messages = [
-    {"role": "system", "content": "You are a weather chatbot."},
-    {"role": "user", "content": "is it sunny in berkeley CA?"},
+    {"role": "system", "content": "Eres un chatbot de clima."},
+    {"role": "user", "content": "Está soleado en Berkeley CA?"},
 ]
 response = client.chat.completions.create(
     model=MODEL_NAME,
@@ -79,9 +78,9 @@ response = client.chat.completions.create(
     tool_choice="auto",
 )
 
-print(f"Response from {MODEL_NAME} on {API_HOST}: \n")
+print(f"Respuesta de {MODEL_NAME} en {API_HOST}: \n")
 
-# Now actually call the function as indicated
+# Ahora llama a la función indicada
 
 if response.choices[0].message.tool_calls:
     tool_call = response.choices[0].message.tool_calls[0]

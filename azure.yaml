@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: python-ai-agent-frameworks-demos
+metadata:
+  template: python-ai-agent-frameworks-demos@0.0.4
+hooks:
+  postprovision:
+    windows:
+      shell: pwsh
+      run: ./infra/write_dot_env.ps1
+      interactive: false
+      continueOnError: false
+    posix:
+      shell: sh
+      run: ./infra/write_dot_env.sh
+      interactive: false
+      continueOnError: false

@@ -1,12 +1,13 @@
 import csv
 import os
+from pathlib import Path
 
 import azure.identity
 import openai
 from dotenv import load_dotenv
 from lunr import lunr
 
-# Setup the OpenAI client to use either Azure, OpenAI.com, or Ollama API
+# Configura el cliente de OpenAI para usar la API de Azure, OpenAI.com u Ollama
 load_dotenv(override=True)
 API_HOST = os.getenv("API_HOST", "github")
 
@@ -14,12 +15,11 @@ if API_HOST == "azure":
     token_provider = azure.identity.get_bearer_token_provider(
         azure.identity.DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
     )
-    client = openai.AzureOpenAI(
-        api_version=os.environ["AZURE_OPENAI_VERSION"],
-        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-        azure_ad_token_provider=token_provider,
+    client = openai.OpenAI(
+        base_url=os.environ["AZURE_OPENAI_ENDPOINT"],
+        api_key=token_provider,
     )
-    MODEL_NAME = os.environ["AZURE_OPENAI_DEPLOYMENT"]
+    MODEL_NAME = os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"]
 
 elif API_HOST == "ollama":
     client = openai.OpenAI(base_url=os.environ["OLLAMA_ENDPOINT"], api_key="nokeyneeded")
@@ -34,7 +34,9 @@ else:
     MODEL_NAME = os.environ["OPENAI_MODEL"]
 
 # Indexamos los datos del CSV
-with open("hybridos.csv") as file:
+
+CSV_PATH = Path(__file__).with_name("hybridos.csv")
+with CSV_PATH.open(newline="", encoding="utf-8") as file:
     reader = csv.reader(file)
     rows = list(reader)
 documents = [{"id": (i + 1), "body": " ".join(row)} for i, row in enumerate(rows[1:])]
