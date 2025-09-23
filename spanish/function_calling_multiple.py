@@ -80,7 +80,10 @@ response = client.chat.completions.create(
     model=MODEL_NAME,
     messages=[
         {"role": "system", "content": "Eres un chatbot de turismo."},
-        {"role": "user", "content": "¿Está lloviendo lo suficiente en Sídney como para ver películas y cuáles estan en los cines?"},
+        {
+            "role": "user",
+            "content": "¿Está lloviendo lo suficiente en Sídney como para ver películas y cuáles estan en los cines?",
+        },
     ],
     tools=tools,
     tool_choice="auto",
