@@ -4,7 +4,7 @@ import azure.identity
 import openai
 from dotenv import load_dotenv
 
-# Setup the OpenAI client to use either Azure, OpenAI.com, or Ollama API
+# Configura el cliente de OpenAI para usar la API de Azure, OpenAI.com u Ollama
 load_dotenv(override=True)
 API_HOST = os.getenv("API_HOST", "github")
 
@@ -36,7 +36,7 @@ tools = [
         "type": "function",
         "function": {
             "name": "lookup_weather",
-            "description": "Buscar el clima para un nombre de ciudad o código postal dado.",
+            "description": "Busca el clima según nombre de ciudad o código postal.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -57,7 +57,7 @@ tools = [
         "type": "function",
         "function": {
             "name": "lookup_movies",
-            "description": "Buscar películas en cartelera en un nombre de ciudad o código postal dado.",
+            "description": "Buscar películas en cines según nombre de ciudad o código postal.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -80,7 +80,7 @@ response = client.chat.completions.create(
     model=MODEL_NAME,
     messages=[
         {"role": "system", "content": "Eres un chatbot de turismo."},
-        {"role": "user", "content": "¿Está lloviendo lo suficiente en Sídney como para ver películas y cuáles hay?"},
+        {"role": "user", "content": "¿Está lloviendo lo suficiente en Sídney como para ver películas y cuáles estan en los cines?"},
     ],
     tools=tools,
     tool_choice="auto",

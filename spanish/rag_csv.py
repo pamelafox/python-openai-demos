@@ -7,7 +7,7 @@ import openai
 from dotenv import load_dotenv
 from lunr import lunr
 
-# Setup the OpenAI client to use either Azure, OpenAI.com, or Ollama API
+# Configura el cliente de OpenAI para usar la API de Azure, OpenAI.com u Ollama
 load_dotenv(override=True)
 API_HOST = os.getenv("API_HOST", "github")
 
@@ -44,7 +44,7 @@ index = lunr(ref="id", fields=["body"], documents=documents)
 # Obteneemos la pregunta del usuario
 user_question = "¿qué tan rápido es el Prius v?"
 
-# Buscaamos en el índice la pregunta del usuario
+# Buscamos en el índice la pregunta del usuario
 results = index.search(user_question)
 matching_rows = [rows[int(result["ref"])] for result in results]
 
@@ -71,5 +71,5 @@ response = client.chat.completions.create(
     ],
 )
 
-print(f"\nResponse from {API_HOST}: \n")
+print(f"\nRespuest de {API_HOST}: \n")
 print(response.choices[0].message.content)

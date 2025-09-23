@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from lunr import lunr
 from sentence_transformers import CrossEncoder
 
-# Setup the OpenAI client to use either Azure, OpenAI.com, or Ollama API
+# Configura el cliente de OpenAI para usar la API de Azure, OpenAI.com u Ollama
 load_dotenv(override=True)
 API_HOST = os.getenv("API_HOST", "github")
 
@@ -113,7 +113,7 @@ def hybrid_search(query, limit):
 
 
 # Obtener la pregunta del usuario
-user_question = "cual insecta es gris y velloso?"
+user_question = "como se llama el insecto que de color gris y es peludito?"
 
 # Buscar la pregunta del usuario en el índice
 retrieved_documents = hybrid_search(user_question, limit=5)

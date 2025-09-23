@@ -5,11 +5,11 @@ import azure.identity.aio
 import openai
 from dotenv import load_dotenv
 
-# Setup the OpenAI client to use either Azure, OpenAI.com, or Ollama API
+# Configura el cliente de OpenAI para usar la API de Azure, OpenAI.com u Ollama
 load_dotenv(override=True)
 API_HOST = os.getenv("API_HOST", "github")
 
-azure_credential = None  # Referencia para poder cerrar la credencial y su sesión HTTP.
+azure_credential = None  # Guarda la Azure Credential para poder cerrarla correctamente
 if API_HOST == "azure":
     azure_credential = azure.identity.aio.DefaultAzureCredential()
     token_provider = azure.identity.aio.get_bearer_token_provider(
@@ -81,7 +81,7 @@ async def close_clients() -> None:
 async def main():
     """Punto de entrada que garantiza la liberación de recursos."""
     try:
-        await single()  # Cambiar a multiple() para el ejemplo concurrente.
+        await single()  # Usa await multiple() si quieres ejecutar de forma concurrente.
     finally:
         await close_clients()
 

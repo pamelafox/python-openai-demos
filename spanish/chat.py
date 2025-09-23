@@ -4,7 +4,7 @@ import azure.identity
 import openai
 from dotenv import load_dotenv
 
-# Setup the OpenAI client to use either Azure, OpenAI.com, or Ollama API
+# Configura el cliente de OpenAI para usar la API de Azure, OpenAI.com u Ollama
 load_dotenv(override=True)
 API_HOST = os.getenv("API_HOST", "github")
 
@@ -41,5 +41,5 @@ response = client.chat.completions.create(
     ],
 )
 
-print(f"Response from {API_HOST}: \n")
+print(f"Repuesta de {API_HOST}: \n")
 print(response.choices[0].message.content)
