@@ -45,11 +45,6 @@ async def generate_response(location):
             },
         ],
         temperature=1,
-        max_tokens=400,
-        top_p=0.95,
-        frequency_penalty=0,
-        presence_penalty=0,
-        stop=None,
     )
     print("Obtuve respuesta para ", location)
     return response.choices[0].message.content

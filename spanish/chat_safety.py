@@ -31,8 +31,6 @@ try:
     response = client.chat.completions.create(
         model=MODEL_NAME,
         temperature=0.7,
-        max_tokens=100,
-        n=1,
         messages=[
             {
                 "role": "system",

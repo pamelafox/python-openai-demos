@@ -44,11 +44,7 @@ while True:
         model=MODEL_NAME,
         messages=messages,
         temperature=1,
-        max_tokens=400,
-        top_p=0.95,
-        frequency_penalty=0,
-        presence_penalty=0,
-        stop=None,
+       
     )
     bot_response = response.choices[0].message.content
     messages.append({"role": "assistant", "content": bot_response})
