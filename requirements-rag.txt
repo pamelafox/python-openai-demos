@@ -1,3 +1,2 @@
-pymupdf4llm
-lunr
-sentence-transformers
+# Large ML packages (torch, sentence-transformers, etc.) are installed
+# via .devcontainer/scripts/postCreate.sh to reduce disk usage during build
