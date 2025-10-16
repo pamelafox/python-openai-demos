@@ -2,3 +2,4 @@ azure-identity
 openai>=1.108.1
 python-dotenv
 langchain-text-splitters
+rich
